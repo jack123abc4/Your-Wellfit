@@ -1,4 +1,7 @@
 const Recipe = require("./Recipe");
+
+const workout = require("./workout")
+
 const User = require('./User');
 
 User.hasMany(Recipe, {
@@ -10,4 +13,5 @@ User.hasMany(Recipe, {
     foreignKey: 'user_id'
   });
 
-module.exports = { User, Recipe };
+module.exports = { User, Recipe, workout};
+
