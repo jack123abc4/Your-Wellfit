@@ -1,8 +1,123 @@
 [
     {
-        "exercise": "",
+        "exercise": "Dumbbell Tricep Extensions",
         "description": "",
-        "bodypart": "",
-        "equipment": ""
+        "bodypart": "Arms",
+        "equipment": "Dumbbell"
+    },
+    {
+        "exercise": "Cable Tricep Pushdown",
+        "description": "",
+        "bodypart": "Arms",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Hammer Curl",
+        "description": "",
+        "bodypart": "Arms",
+        "equipment": "Dumbbell"
+    },
+    {
+        "exercise": "Barbell Preacher Curl",
+        "description": "",
+        "bodypart": "Arms",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Barbell Deadlift",
+        "description": "",
+        "bodypart": "Back",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Pull Up",
+        "description": "",
+        "bodypart": "Back",
+        "equipment": "Bodyweight"
+    },
+    {
+        "exercise": "Barbell Row",
+        "description": "",
+        "bodypart": "Back",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Cable Lat Pulldown",
+        "description": "",
+        "bodypart": "Back",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Flat Barbell Bench Press",
+        "description": "",
+        "bodypart": "Chest",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Chest Fly",
+        "description": "",
+        "bodypart": "Chest",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Incline Dumbbell Bench Press",
+        "description": "",
+        "bodypart": "Chest",
+        "equipment": "Dumbbell"
+    },
+    {
+        "exercise": "Push Up",
+        "description": "",
+        "bodypart": "Chest",
+        "equipment": "Bodyweight"
+    },
+    {
+        "exercise": "Barbell Squat",
+        "description": "",
+        "bodypart": "Legs",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Barbell Lunge",
+        "description": "",
+        "bodypart": "Legs",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Leg Extension",
+        "description": "",
+        "bodypart": "Legs",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Calf Raise",
+        "description": "",
+        "bodypart": "Legs",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Barbell Shoulder Press",
+        "description": "",
+        "bodypart": "Shoulders",
+        "equipment": "Barbell"
+    },
+    {
+        "exercise": "Dumbbell Shoulder Press",
+        "description": "",
+        "bodypart": "Shoulders",
+        "equipment": "Dumbbell"
+    },
+    {
+        "exercise": "Face Pull",
+        "description": "",
+        "bodypart": "Shoulders",
+        "equipment": "Machine"
+    },
+    {
+        "exercise": "Dumbbell Lateral Raise",
+        "description": "",
+        "bodypart": "Shoulders",
+        "equipment": "Dumbbell"
     }
 ]
+
