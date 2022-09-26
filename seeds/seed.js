@@ -1,6 +1,10 @@
 const sequelize = require('../config/connection');
-const { User, Recipe } = require('../models');
+
+const workoutData = require('./workoutData.json')
+
+const { User, Recipe, workout } = require('../models');
 const userData = require('./userData.json');
+
 const recipeData = require('./recipeData.json');
 
 const seedDatabase = async () => {
@@ -11,7 +15,8 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-
+  
+  
   for (const user of users) {
     console.log("password", user.password)
   };
@@ -23,6 +28,7 @@ const seedDatabase = async () => {
     });
   }
   
+
 
 
   process.exit(0);
