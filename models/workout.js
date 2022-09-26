@@ -37,4 +37,4 @@ workout.init(
     }
 );
 
-modules.exports = workout;
+module.exports = workout;
