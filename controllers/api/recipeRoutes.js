@@ -21,10 +21,10 @@ router.post('/batch', async (req, res) => {
   console.log("Route hit! Body: ", req.body);
   await sequelize.sync();
   try {
-    const newRecipes = await Recipe.bulkCreate({
-      ...req.body,
-      user_id: req.session.user_id,
-    });
+    for (const recipe of req.body) {
+      console.log("Recipe decon",recipe);
+      // await Recipe.create(recipe);
+    }
 
     res.status(200).json(newRecipes);
   } catch (err) {

@@ -1,15 +1,14 @@
 [
-    {
-      "name": "Chicken Visuvia",
-      "calories": 800
-    },
-    {
-      "name": "Boiled Toast",
-      "calories": 2000
-    },
-    {
-      "name": "Lobster Bisque",
-      "calories": 450
-    }
+  {
+    "name": "Chicken Visuvia",
+    "calories": 800
+  },
+  {
+    "name": "Boiled Toast",
+    "calories": 2000
+  },
+  {
+    "name": "Lobster Bisque",
+    "calories": 450
+  }
 ]
-  

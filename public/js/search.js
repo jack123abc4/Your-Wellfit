@@ -28,19 +28,20 @@ const loginFormHandler = async (event) => {
             });
         
         console.log("HITS", results.hits);
-        const recipeData = JSON.stringify(results.hits.map(result => {
+        const recipeData = results.hits.map(result => {
             // console.log(result);
             // console.log(result.recipe);
             return {name : result.recipe.label, calories : result.recipe.calories, user_id : 1};
-        }));
-        console.log("RECIPE DATA", recipeData);
+        });
+        console.log("RECIPE DATA", JSON.stringify(recipeData));
         
         const response = await fetch('/api/recipes/batch', {
             method: 'POST',
-            body: recipeData,
             headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(recipeData),
+            
           });
-      
+        console.log("RESPONSE: ", response.json());
           if (response.ok) {
             // If successful, redirect the browser to the profile page
             document.location.replace('/searchResults');
@@ -59,13 +60,6 @@ const loginFormHandler = async (event) => {
 
 function searchTermToURL(searchTerm) {
     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
-}
-
-async function createRecipes(recipeData) {
-    await sequelize.sync({ force: true });
-   
-    const recipes = await Recipe.bulkCreate(recipeData);
-    console.log(recipes);
 }
 
 // async function getResults(searchTerm) {
