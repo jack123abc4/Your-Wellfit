@@ -2,42 +2,82 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wellfit Recipes</title>
-  <link rel="stylesheet" href="/css/jass.css">
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WellFit</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/45142689e7.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-  <div class="flex-column justify-space-around">
-    <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        <a href="/">Wellfit Recipes</a>
-      </h1>
-      <nav>
-        <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
-        <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
-        {{else}}
-        <a href="/login">login</a>
-        {{/if}}
-      </nav>
-    </header>
-    <main class="container container-fluid mt-5">
-      <!-- Render the sub layout -->
-      {{{ body }}}
+<body class="bg-hero bg-no-repeat bg-cover bg-center bg-fixed font-sans leading-normal tracking-normal" id="background-image" style="background-image: url('https://img.freepik.com/free-photo/healthy-life-sport-concept-sneakers-with-apples-towel-bottle-water-wooden-background-copy-space_1220-1474.jpg?w=1800&t=st=1661792367~exp=1661792967~hmac=b4c659e78a3194557b1fc44b536f3d4be08c2f131d4fb75a5000ff868426746f');">
+    <!-- Nav bar - logo on left, links to other html pages on left -->
+	<nav class="flex items-center justify-between flex-wrap p-6 fixed w-full z-10 top-0">
+		<div class="flex items-center flex-shrink-0 text-white mr-6">
+				<a class="navbar-item" href="/">
+                    <img src="assets\new logo.png" class="rounded-full" id="logo" alt="Logo">
+                  </a>
+		</div>
+		<div class="block lg:hidden">
+			<button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-white hover:border-white">
+				<svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Home</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+			</button>
+		</div>
+        <!-- Nav links with icons, change with hover -->
+                    {{!-- {{#if logged_in}} --}}
+		<div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block pt-6 lg:pt-0" id="nav-content">
+			<ul class="list-reset lg:flex justify-end flex-1 items-center">
+				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/"><i class="fa-solid fa-house"></i> Home</a>
+				</li>
+                				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/profile"><i class="fa-solid fa-heart"></i> Profile</a>
+				</li>
+				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/recipes"><i class="fa-solid fa-book"></i> Recipes</a>
+				</li>
+				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/workouts"><i class="fa-solid fa-dumbbell"></i> Workouts</a>
+				</li>
+				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/search"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+				</li>
+        				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/logout"><i class="fa-solid fa-user-slash"></i> Logout</a>
+				</li>
+        
+            {{!-- {{else}}
+            				<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/"><i class="fa-solid fa-house"></i> Home</a>
+				</li>
+                    	<li class="mr-3">
+					<a class="inline-block text-gray-300 no-underline hover:text-gray-50 hover:text-underline py-2 px-4 text-lg" href="/login"><i class="fa-solid fa-user-plus"></i> Login/Sign Up</a>
+				</li>
+            {{/if}} --}}
+			</ul>
+		</div>
+	</nav>
+  
+    <main class="container flex h-screen max-w-5xl mx-auto m-8 items-center">
+        <div class="m-auto">
+            <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white items-center">
+          {{{ body }}}
+            </h2>
+            <br>
+        </div>
     </main>
+
     <footer>
       
     </footer>
   </div>
 
   <!-- Render script for logged in users only -->
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
+  {{!-- {{#if logged_in}}
+  <script src="/logout"></script>
+  {{/if}} --}}
 </body>
 
 </html>
