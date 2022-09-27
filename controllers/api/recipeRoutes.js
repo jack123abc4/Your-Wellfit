@@ -20,16 +20,16 @@ router.post('/', withAuth, async (req, res) => {
 router.post('/batch', async (req, res) => {
   console.log("Route hit! Body: ", req.body);
   await sequelize.sync();
-  try {
+  // try {
     for (const recipe of req.body) {
       console.log("Recipe decon",recipe);
-      // await Recipe.create(recipe);
+      await Recipe.create(recipe);
     }
 
-    res.status(200).json(newRecipes);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+    res.status(200).json();
+  // } catch (err) {
+  //   res.status(400).json(err);
+  // }
 });
 
 
