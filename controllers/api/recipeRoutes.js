@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection');
+
 const { User, Recipe } = require('../../models');
 const withAuth = require('../../utils/auth');
 
@@ -14,6 +16,22 @@ router.post('/', withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+router.post('/batch', async (req, res) => {
+  console.log("Route hit! Body: ", req.body);
+  await sequelize.sync();
+  try {
+    const newRecipes = await Recipe.bulkCreate({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newRecipes);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
