@@ -86,4 +86,22 @@ router.get('/search', (req, res) => {
     res.render('search');
   });
 
+  router.get('/recipe', (req, res) => {
+    if (req.session.logged_in) {
+      res.redirect('/recipe');
+      return;
+    }
+  
+    res.render('recipe');
+  });
+
+  router.get('/workout', (req, res) => {
+    if (req.session.logged_in) {
+      res.redirect('/workout');
+      return;
+    }
+  
+    res.render('workout');
+  });
+
 module.exports = router;
