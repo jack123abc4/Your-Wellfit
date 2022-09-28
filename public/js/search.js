@@ -33,8 +33,9 @@ const loginFormHandler = async (event) => {
             // console.log(result);
             // console.log(result.recipe);
             // const nutrients = nutrientsToInclude.map((nutrient) => {
+              
+              // console.log(totalNutrients,totalNutrients.CA,totalNutrients.CA.quantity);
               const totalNutrients = result.recipe.totalNutrients;
-              console.log(totalNutrients,totalNutrients.CA,totalNutrients.CA.quantity);
             
             // });
             return {
@@ -51,9 +52,12 @@ const loginFormHandler = async (event) => {
               procnt: totalNutrients.PROCNT.quantity,
               sugar: totalNutrients.SUGAR.quantity,
               image: result.recipe.image,
-              user_id: 1};
+              user_id: 1,
+              ingredientLines: result.recipe.ingredientLines,
+              ingredients: result.recipe.ingredients
+              };
         });
-        //console.log("RECIPE DATA", JSON.stringify(recipeData));
+        console.log("RECIPE DATA", JSON.stringify(recipeData));
         
         const response = await fetch('/api/recipes/batch', {
             method: 'POST',

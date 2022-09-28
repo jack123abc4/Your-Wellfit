@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { QueryTypes } = require('sequelize');
 
-const { User, Recipe } = require('../../models');
+const { User, Recipe, Ingredient } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -23,6 +23,9 @@ router.post('/batch', async (req, res) => {
   await sequelize.sync();
   // try {
     sequelize.query("DELETE FROM current_recipes");
+    
+    
+    
     for (const recipe of req.body) {
       let recipeID = await sequelize.query(
         `SELECT id FROM recipes
@@ -40,6 +43,14 @@ router.post('/batch', async (req, res) => {
             WHERE
             name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true}
           );
+          for (const ingredient of recipe.ingredients) {
+            await Ingredient.create({
+              ...ingredient,
+              food_category: ingredient.foodCategory,
+              food_id: ingredient.foodId,
+              recipe_id: recipeID.id,
+            });
+          }
           //console.log("Unique!", recipeID);
         }
         else {

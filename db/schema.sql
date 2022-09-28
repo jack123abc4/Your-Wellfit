@@ -48,6 +48,14 @@ CREATE TABLE current_recipes (
 
 CREATE TABLE ingredients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    food VARCHAR(100),
+    food_category VARCHAR(100),
+    food_id VARCHAR(100),
+    image TEXT,
+    measure VARCHAR(30),
+    quantity INT,
+    text TEXT,
+    weight INT,
     recipe_id INT,
 
     FOREIGN KEY(recipe_id)
