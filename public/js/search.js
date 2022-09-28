@@ -1,7 +1,8 @@
 // const sequelize = require('../../config/connection');
 // const { User, Recipe, workout } = require('../../models');
 
-const searchFormHandler = async (event) => {
+
+const loginFormHandler = async (event) => {
     event.preventDefault();
   
     const searchTerm = document.querySelector('#recipe-search').value.trim();
@@ -27,19 +28,20 @@ const searchFormHandler = async (event) => {
             });
         
         console.log("HITS", results.hits);
-        const recipeData = JSON.stringify(results.hits.map(result => {
+        const recipeData = results.hits.map(result => {
             // console.log(result);
             // console.log(result.recipe);
             return {name : result.recipe.label, calories : result.recipe.calories, user_id : 1};
-        }));
-        console.log("RECIPE DATA", recipeData);
+        });
+        console.log("RECIPE DATA", JSON.stringify(recipeData));
         
         const response = await fetch('/api/recipes/batch', {
             method: 'POST',
-            body: recipeData,
             headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(recipeData),
+            
           });
-      
+        console.log("RESPONSE: ", response.json());
           if (response.ok) {
             // If successful, redirect the browser to the profile page
             document.location.replace('/searchResults');
@@ -54,18 +56,11 @@ const searchFormHandler = async (event) => {
   
   document
     .querySelector('.search-form')
-    .addEventListener('submit', searchFormHandler);
+    .addEventListener('submit', loginFormHandler);
 
 function searchTermToURL(searchTerm) {
     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
 }
-
-// async function createRecipes(recipeData) {
-//     await sequelize.sync({ force: true });
-   
-//     const recipes = await Recipe.bulkCreate(recipeData);
-//     console.log(recipes);
-// }
 
 // async function getResults(searchTerm) {
 //     const fullURL = searchTermToURL(searchTerm);

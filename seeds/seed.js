@@ -15,13 +15,11 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
+  console.log("USER DATA: ", userData);
   
-  
-  for (const user of users) {
-    console.log("password", user.password)
-  };
 
   for (const recipe of recipeData) {
+    console.log("...recipe",{...recipe});
     await Recipe.create({
       ...recipe,
       user_id: users[Math.floor(Math.random() * users.length)].id,
