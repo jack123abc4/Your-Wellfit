@@ -8,7 +8,7 @@ CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL
+    password TEXT NOT NULL
 );
 
 CREATE TABLE recipes (

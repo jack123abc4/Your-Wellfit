@@ -1,8 +1,7 @@
 // const sequelize = require('../../config/connection');
 // const { User, Recipe, workout } = require('../../models');
 
-
-const loginFormHandler = async (event) => {
+const searchFormHandler = async (event) => {
     event.preventDefault();
   
     const searchTerm = document.querySelector('#recipe-search').value.trim();
@@ -55,18 +54,18 @@ const loginFormHandler = async (event) => {
   
   document
     .querySelector('.search-form')
-    .addEventListener('submit', loginFormHandler);
+    .addEventListener('submit', searchFormHandler);
 
 function searchTermToURL(searchTerm) {
     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
 }
 
-async function createRecipes(recipeData) {
-    await sequelize.sync({ force: true });
+// async function createRecipes(recipeData) {
+//     await sequelize.sync({ force: true });
    
-    const recipes = await Recipe.bulkCreate(recipeData);
-    console.log(recipes);
-}
+//     const recipes = await Recipe.bulkCreate(recipeData);
+//     console.log(recipes);
+// }
 
 // async function getResults(searchTerm) {
 //     const fullURL = searchTermToURL(searchTerm);
