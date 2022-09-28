@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const sequelize = require('../config/connection');
 const { User, Recipe} = require('../models');
 const withAuth = require('../utils/auth');
 
@@ -89,14 +90,23 @@ router.get('/search', (req, res) => {
 router.get('/searchResults', async (req, res) => {
   try {
     // Get all projects and JOIN with user data
-    const recipeData = await Recipe.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
-    });
+    const currentRecipePks = (await sequelize.query("SELECT (recipe_id) FROM current_recipes"))[0];
+    console.log(currentRecipePks);
+    const recipeData = [];
+
+    for (const pk of currentRecipePks) {
+      const r = await Recipe.findByPk(pk.recipe_id, {
+        include: [
+          {
+            model: User,
+            attributes: ['name'],
+          },
+        ],
+      });
+      recipeData.push(r);
+    };
+
+    console.log("RECIPE DATA",recipeData);
 
     // Serialize data so the template can read it
     const recipes = recipeData.map((recipe) => recipe.get({ plain: true }));

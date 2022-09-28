@@ -22,6 +22,7 @@ router.post('/batch', async (req, res) => {
   console.log("Route hit! Body: ", req.body);
   await sequelize.sync();
   // try {
+    sequelize.query("DELETE FROM current_recipes");
     for (const recipe of req.body) {
       let recipeID = await sequelize.query(
         `SELECT id FROM recipes
@@ -46,8 +47,9 @@ router.post('/batch', async (req, res) => {
         }
       console.log("Recipe decon",recipe);
       
-      sequelize.query("DELETE FROM current_recipes");
-      sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      
+      console.log(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`);
       // db.query(INSERT r_id into current recipes)
     }
 
