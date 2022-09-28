@@ -19,7 +19,7 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 router.post('/batch', async (req, res) => {
-  console.log("Route hit! Body: ", req.body);
+  ////console.log("Route hit! Body: ", req.body);
   await sequelize.sync();
   // try {
     sequelize.query("DELETE FROM current_recipes");
@@ -30,25 +30,25 @@ router.post('/batch', async (req, res) => {
         name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true }
       );
 
-        console.log("RECIPE ID", recipeID);
+        //console.log("RECIPE ID", recipeID);
         if (!recipeID) {
           
           const currentRecipe = await Recipe.create(recipe);
-          console.log(recipe.name,recipe.calories);
+          //console.log(recipe.name,recipe.calories);
           recipeID = await sequelize.query(
             `SELECT id FROM recipes
             WHERE
             name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true}
           );
-          console.log("Unique!", recipeID);
+          //console.log("Unique!", recipeID);
         }
         else {
-          console.log("Duplicate!", recipeID);
+          //console.log("Duplicate!", recipeID);
         }
-      console.log("Recipe decon",recipe);
+      //console.log("Recipe decon",recipe);
       
       
-      console.log(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      //console.log(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
       sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`);
       // db.query(INSERT r_id into current recipes)
     }

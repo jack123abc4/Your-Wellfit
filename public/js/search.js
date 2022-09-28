@@ -1,7 +1,8 @@
 // const sequelize = require('../../config/connection');
 // const { User, Recipe, workout } = require('../../models');
 
-
+const nutrientsToInclude = ["CA", "CHOCDF", "CHOLE", "FAT", "FE", "FIBTG", "K", "NA", "PROCNT", "SUGAR"];
+// const nutrientsToInclude = [{CA: 0}, {CHOCDF: 0}, {CHOLE: 0}, {FAT: 0}, {FE: 0}, {FIBTG: 0}, {K: 0}, {NA: 0}, {PROCNT: 0}, {SUGAR: 0}];
 const loginFormHandler = async (event) => {
     event.preventDefault();
   
@@ -17,23 +18,42 @@ const loginFormHandler = async (event) => {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
+                //console.log(data);
                 var recipe = data.hits[0].recipe;
-                console.log("RECIPE", recipe);
+                //console.log("RECIPE", recipe);
                 return data;
 
             })
             .catch(function(error) {
-                console.log(error);
+                //console.log(error);
             });
         
         console.log("HITS", results.hits);
         const recipeData = results.hits.map(result => {
             // console.log(result);
             // console.log(result.recipe);
-            return {name : result.recipe.label, calories : result.recipe.calories, user_id : 1};
+            // const nutrients = nutrientsToInclude.map((nutrient) => {
+              const totalNutrients = result.recipe.totalNutrients;
+              console.log(totalNutrients,totalNutrients.CA,totalNutrients.CA.quantity);
+            
+            // });
+            return {
+              name: result.recipe.label, 
+              calories: result.recipe.calories, 
+              ca: totalNutrients.CA.quantity,
+              chocdf: totalNutrients.CHOCDF.quantity,
+              chole: totalNutrients.CHOLE.quantity,
+              fat: totalNutrients.FAT.quantity,
+              fe: totalNutrients.FE.quantity,
+              fibtg: totalNutrients.FIBTG.quantity,
+              k: totalNutrients.K.quantity,
+              na: totalNutrients.NA.quantity,
+              procnt: totalNutrients.PROCNT.quantity,
+              sugar: totalNutrients.SUGAR.quantity,
+              image: result.recipe.image,
+              user_id: 1};
         });
-        console.log("RECIPE DATA", JSON.stringify(recipeData));
+        //console.log("RECIPE DATA", JSON.stringify(recipeData));
         
         const response = await fetch('/api/recipes/batch', {
             method: 'POST',
@@ -41,11 +61,11 @@ const loginFormHandler = async (event) => {
             body: JSON.stringify(recipeData),
             
           });
-        console.log("RESPONSE: ", response.json());
+        //console.log("RESPONSE: ", response.json());
           if (response.ok) {
             // If successful, redirect the browser to the profile page
             document.location.replace('/searchResults');
-            console.log("Success from search.js");
+            //console.log("Success from search.js");
           } else {
             alert(response.statusText);
           }

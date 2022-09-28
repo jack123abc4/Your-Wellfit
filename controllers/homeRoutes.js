@@ -91,7 +91,7 @@ router.get('/searchResults', async (req, res) => {
   try {
     // Get all projects and JOIN with user data
     const currentRecipePks = (await sequelize.query("SELECT (recipe_id) FROM current_recipes"))[0];
-    console.log(currentRecipePks);
+    //console.log(currentRecipePks);
     const recipeData = [];
 
     for (const pk of currentRecipePks) {
@@ -106,7 +106,7 @@ router.get('/searchResults', async (req, res) => {
       recipeData.push(r);
     };
 
-    console.log("RECIPE DATA",recipeData);
+    //console.log("RECIPE DATA",recipeData);
 
     // Serialize data so the template can read it
     const recipes = recipeData.map((recipe) => recipe.get({ plain: true }));
