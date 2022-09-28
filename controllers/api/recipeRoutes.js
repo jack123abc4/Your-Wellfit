@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
+const { QueryTypes } = require('sequelize');
 
 const { User, Recipe } = require('../../models');
 const withAuth = require('../../utils/auth');
@@ -22,8 +23,32 @@ router.post('/batch', async (req, res) => {
   await sequelize.sync();
   // try {
     for (const recipe of req.body) {
+      let recipeID = await sequelize.query(
+        `SELECT id FROM recipes
+        WHERE
+        name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true }
+      );
+
+        console.log("RECIPE ID", recipeID);
+        if (!recipeID) {
+          
+          const currentRecipe = await Recipe.create(recipe);
+          console.log(recipe.name,recipe.calories);
+          recipeID = await sequelize.query(
+            `SELECT id FROM recipes
+            WHERE
+            name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true}
+          );
+          console.log("Unique!", recipeID);
+        }
+        else {
+          console.log("Duplicate!", recipeID);
+        }
       console.log("Recipe decon",recipe);
-      await Recipe.create(recipe);
+      
+      sequelize.query("DELETE FROM current_recipes");
+      sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      // db.query(INSERT r_id into current recipes)
     }
 
     res.status(200).json();

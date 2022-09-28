@@ -23,7 +23,7 @@ CREATE TABLE recipes (
 );
 
 
-CREATE TABLE current_results (
+CREATE TABLE current_recipes (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT,
 
