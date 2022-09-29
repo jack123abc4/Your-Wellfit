@@ -2,7 +2,7 @@
 // const { User, Recipe, workout } = require('../../models');
 
 
-const loginFormHandler = async (event) => {
+const searchFormHandler = async (event) => {
     event.preventDefault();
   
     const searchTerm = document.querySelector('#recipe-search').value.trim();
@@ -56,7 +56,7 @@ const loginFormHandler = async (event) => {
   
   document
     .querySelector('.search-form')
-    .addEventListener('submit', loginFormHandler);
+    .addEventListener('submit', searchFormHandler);
 
 function searchTermToURL(searchTerm) {
     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
