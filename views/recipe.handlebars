@@ -7,9 +7,9 @@
     <ul style="font-size:50%">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
-      <li class="ingredient-list-element">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
       {{else}}
-      <li class="ingredient-list-element" style="text-decoration: line-through">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: line-through" state="inactive">{{ingredient.text}}</li>
       {{/if}}
     {{/each}}
 
