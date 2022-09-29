@@ -31,6 +31,7 @@ for (const el of listEls) {
     el.addEventListener('click', ingredientClick);
 }
 
+
 const subtractBtnClick = async (event) => {
     if (clickMode === 'replace') {
         clickMode = 'subtract';
@@ -51,8 +52,21 @@ const replaceBtnClick = async (event) => {
     }
 }
 
+const addBtnClick = async (event) => {
+    if (clickMode !== 'add') {
+        clickMode = 'add';
+        addBtn.setAttribute("state", "active");
+        addBtn.setAttribute("aria-pressed", "true");
+        replaceBtn.setAttribute("state", "inactive");
+        replaceBtn.setAttribute("aria-pressed", "false");
+        subtractBtn.setAttribute("state", "inactive");
+        subtractBtn.setAttribute("aria-pressed", "false");
+    }
+}
+
 const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
+const addBtn = document.querySelector('#add-btn');
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
