@@ -1,10 +1,16 @@
+<h1>WellFit Recipes</h1>
+
 <div class="text-center">
-  <h2>{{recipe.name}}</h2>
+  <h2 class="text-white">{{recipe.name}}</h2>
   <img src="{{recipe.image}}" alt="">
   
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="replace-btn">Replace an Ingredient</a>
+
+
   <div>
     <h3>Ingredients</h3>
-    <ul style="font-size:50%">
+    <ul>
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
       <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
@@ -19,7 +25,7 @@
   
   <div>
     <h3>Nutrients</h3>
-      <ul style="font-size:50%">
+      <ul>
         <li>Calories: {{recipe.calories}}</li>
         <li>Calcium: {{recipe.ca}}</li>
         <li>Carbs: {{recipe.chocdf}}</li>
