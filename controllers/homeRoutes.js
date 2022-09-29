@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { User, Recipe, Ingredient} = require('../models');
-=======
-const { User, Recipe, Workout} = require('../models');
->>>>>>> 157c4811ffd085aa99e6f2233908e23fb96ff205
+const { User, Recipe, Ingredient, Workout} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -159,7 +155,7 @@ router.get('/searchResults', async (req, res) => {
   }
 })
 
-  router.get('/recipe', (req, res) => {
+  router.get('/recipe/:id', (req, res) => {
     if (req.session.logged_in) {
       res.redirect('/recipe');
       return;

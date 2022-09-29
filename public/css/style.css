@@ -1,8 +1,15 @@
 * {
     box-sizing: border-box;
+    color: white;
 }
 
-body {
+h2, h3, ul {
+  color: white;
+}
+
+
+
+/* body {
   font-family: Arial;
   margin: 0;
   display: flex;
@@ -10,16 +17,10 @@ body {
   min-height: 100vh;
   justify-content: flex-start;
   background-color: var(--quatrinary);
-}
+} */
 
-.container {
-  display: flex;
-  flex-flow: column wrap;
-  align-content: flex-start;
-  align-items: center;
-}
 
-  .card {
+  /* .card {
     margin: 20px;
     flex: 0 1 300px;
     border: 7px double var(--dark);
@@ -68,4 +69,13 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+  } */
+
+
+  .container {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
