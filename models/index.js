@@ -3,6 +3,10 @@ const Workout = require("./Workout")
 const User = require('./User');
 const Ingredient = require('./Ingredient');
 
+<<<<<<< HEAD
+=======
+//const Ingredient = require('./Ingredient');
+>>>>>>> 54702f1beac691efc8abb749927997565a200043
 
 User.hasMany(Recipe, {
     foreignKey: 'user_id',
