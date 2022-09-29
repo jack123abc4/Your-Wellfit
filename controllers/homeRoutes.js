@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { User, Recipe} = require('../models');
+const { User, Recipe, Ingredient} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/recipe/:id', async (req, res) => {
-  try {
+  // try {
     const recipeData = await Recipe.findByPk(req.params.id, {
       include: [
         {
@@ -38,16 +38,31 @@ router.get('/recipe/:id', async (req, res) => {
         },
       ],
     });
-
     const recipe = recipeData.get({ plain: true });
 
+    // let ingredientData = (await sequelize.query(
+    //   `SELECT text FROM ingredients
+    //     WHERE recipe_id = ${req.params.id}`))[0];
+    // ingredientData = {ingredients: ingredientData.map((ingredient) => ingredient.text)};
+    // // console.log(ingredientData);
+    // //   console.log(recipe);
+    const ingredientData = await Ingredient.findAll({
+      where: {
+        recipe_id: req.params.id
+      }
+    });
+    const ingredients = ingredientData.map((ingredient) => ingredient.get({ plain: true }));
+    // console.log(ingredients);
+
+    
     res.render('recipe', {
-      ...recipe,
+      recipe,
+      ingredients,
       logged_in: req.session.logged_in
     });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 });
 
 
@@ -91,7 +106,7 @@ router.get('/searchResults', async (req, res) => {
   try {
     // Get all projects and JOIN with user data
     const currentRecipePks = (await sequelize.query("SELECT (recipe_id) FROM current_recipes"))[0];
-    console.log(currentRecipePks);
+    //console.log(currentRecipePks);
     const recipeData = [];
 
     for (const pk of currentRecipePks) {
@@ -106,7 +121,7 @@ router.get('/searchResults', async (req, res) => {
       recipeData.push(r);
     };
 
-    console.log("RECIPE DATA",recipeData);
+    //console.log("RECIPE DATA",recipeData);
 
     // Serialize data so the template can read it
     const recipes = recipeData.map((recipe) => recipe.get({ plain: true }));

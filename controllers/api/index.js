@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const recipeRoutes = require('./recipeRoutes');
 const userRoutes = require('./userRoutes');
-const workoutRoutes = require('./workoutRoutes')
+const recipeRoutes = require('./recipeRoutes');
+const ingredientRoutes = require('./ingredientRoutes');
+const workoutRoutes = require('./workoutRoutes');
 
-router.use('/recipes', recipeRoutes);
 router.use('/users', userRoutes);
+router.use('/recipes', recipeRoutes);
+router.use('/ingredients',ingredientRoutes);
+
 router.use('/workouts', workoutRoutes)
 
 
