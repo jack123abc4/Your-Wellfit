@@ -1,40 +1,44 @@
-const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
-const sequelize = require('../config/connection');
+const { Model, DataTypes } = require("sequelize");
+const bcrypt = require("bcrypt");
+const sequelize = require("../config/connection");
 
-class workout extends Model {}
+class Workout extends Model {}
 
-workout.init(
-    {
-     id: {
-            type: DataTypes.INTEGER,
-            allownNull: false,
-            primaryKey: true,
-            autoIncrement: true,
+Workout.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allownNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
     exercise: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-        type: DataTypes.STRING,
-    },
     bodypart: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     equipment: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    }
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
+  },
+  {
     sequelize,
     timestamps: false,
     // freezeTableName: true,
     underscored: true,
-    modelName: 'workout',
-    }
+    modelName: "workout",
+  }
 );
 
-module.exports = workout;
+module.exports = Workout;

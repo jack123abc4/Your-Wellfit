@@ -34,7 +34,16 @@ CREATE TABLE current_recipes (
 );
 
 CREATE TABLE workouts (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    exercise VARCHAR(100) NOT NULL,
+    bodypart VARCHAR(100) NOT NULL,
+    equipment VARCHAR(100) NOT NULL,
+
+    user_id INT,
+
+    FOREIGN KEY(user_id)
+    REFERENCES  users(id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE exercises (
@@ -58,7 +67,7 @@ CREATE TABLE equipment (
     ON DELETE SET NULL
 );
 
-CREATE TABLE body_parts (
+CREATE TABLE bodypart (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     workout_id INT,
 
