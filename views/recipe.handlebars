@@ -1,20 +1,33 @@
 <div class="text-center">
   <h2>{{name}}</h2>
   <img src="{{image}}" alt="">
-  <ul>
-    <li>Calories: {{calories}}</li>
-    <li>Calcium: {{ca}}</li>
-    <li>Carbs: {{chocdf}}</li>
-    <li>Cholesterol: {{chole}}</li>
-    <li>Fat: {{fat}}</li>
-    <li>Iron: {{fe}}</li>
-    <li>Fiber: {{fibtg}}</li>
-    <li>Potassium: {{k}}</li>
-    <li>Sodium: {{na}}</li>
-    <li>Protein: {{procnt}}</li>
-    <li>Sugar: {{sugar}}</li>
-  </ul>
+  
+  <div>
+    <h3>Ingredients</h3>
+    <ul style="font-size:50%">
+    {{#each ingredients as |ingredient|}}
+      <li>{{ingredient}}</li>
+    
+    {{/each}}
+
+    </ul>
+  </div>
+  
+  
+  <div>
+    <h3>Nutrients</h3>
+      <ul style="font-size:50%">
+        <li>Calories: {{calories}}</li>
+        <li>Calcium: {{ca}}</li>
+        <li>Carbs: {{chocdf}}</li>
+        <li>Cholesterol: {{chole}}</li>
+        <li>Fat: {{fat}}</li>
+        <li>Iron: {{fe}}</li>
+        <li>Fiber: {{fibtg}}</li>
+        <li>Potassium: {{k}}</li>
+        <li>Sodium: {{na}}</li>
+        <li>Protein: {{procnt}}</li>
+        <li>Sugar: {{sugar}}</li>
+      </ul>
+  </div>
 </div>
-
-
-<script src="./js/recipe.js"></script>

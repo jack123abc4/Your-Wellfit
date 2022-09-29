@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/recipe/:id', async (req, res) => {
-  try {
+  // try {
     const recipeData = await Recipe.findByPk(req.params.id, {
       include: [
         {
@@ -38,16 +38,24 @@ router.get('/recipe/:id', async (req, res) => {
         },
       ],
     });
-
     const recipe = recipeData.get({ plain: true });
 
+    let ingredientData = (await sequelize.query(
+      `SELECT text FROM ingredients
+        WHERE recipe_id = ${req.params.id}`))[0];
+    ingredientData = {ingredients: ingredientData.map((ingredient) => ingredient.text)};
+    console.log(ingredientData);
+      console.log(recipe);
+
+    
     res.render('recipe', {
       ...recipe,
+      ...ingredientData,
       logged_in: req.session.logged_in
     });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 });
 
 
