@@ -11,7 +11,9 @@ const ingredientClick = async (event) => {
         
       });
     console.log(response.json());
+    event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
     event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active")
+    
         
 }
   

@@ -57,6 +57,7 @@ CREATE TABLE ingredients (
     text TEXT,
     weight INT,
     active BOOLEAN,
+    original BOOLEAN,
     recipe_id INT,
 
     FOREIGN KEY(recipe_id)

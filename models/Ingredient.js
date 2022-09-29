@@ -44,6 +44,10 @@ Ingredient.init(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+    original: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
     
     recipe_id: {
       type: DataTypes.INTEGER,
