@@ -71,9 +71,11 @@ router.get('/recipe/:id', async (req, res) => {
         recipe_id: req.params.id
       }
     });
-    const ingredients = ingredientData.map((ingredient) => ingredient.get({ plain: true }));
+    
+    const ingredients = ingredientData.map((ingredient) => 
+      ingredient.get({ plain: true }));
     // console.log(ingredients);
-
+    
     
     res.render('recipe', {
       recipe,
