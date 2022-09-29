@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { QueryTypes } = require('sequelize');
 
-const { User, Recipe } = require('../../models');
+const { User, Recipe, Ingredient } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -19,9 +19,13 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 router.post('/batch', async (req, res) => {
-  console.log("Route hit! Body: ", req.body);
+  ////console.log("Route hit! Body: ", req.body);
   await sequelize.sync();
   // try {
+    sequelize.query("DELETE FROM current_recipes");
+    
+    
+    
     for (const recipe of req.body) {
       let recipeID = await sequelize.query(
         `SELECT id FROM recipes
@@ -29,25 +33,34 @@ router.post('/batch', async (req, res) => {
         name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true }
       );
 
-        console.log("RECIPE ID", recipeID);
+        //console.log("RECIPE ID", recipeID);
         if (!recipeID) {
           
           const currentRecipe = await Recipe.create(recipe);
-          console.log(recipe.name,recipe.calories);
+          //console.log(recipe.name,recipe.calories);
           recipeID = await sequelize.query(
             `SELECT id FROM recipes
             WHERE
             name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true}
           );
-          console.log("Unique!", recipeID);
+          for (const ingredient of recipe.ingredients) {
+            await Ingredient.create({
+              ...ingredient,
+              food_category: ingredient.foodCategory,
+              food_id: ingredient.foodId,
+              recipe_id: recipeID.id,
+            });
+          }
+          //console.log("Unique!", recipeID);
         }
         else {
-          console.log("Duplicate!", recipeID);
+          //console.log("Duplicate!", recipeID);
         }
-      console.log("Recipe decon",recipe);
+      //console.log("Recipe decon",recipe);
       
-      sequelize.query("DELETE FROM current_recipes");
-      sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      
+      //console.log(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
+      sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`);
       // db.query(INSERT r_id into current recipes)
     }
 

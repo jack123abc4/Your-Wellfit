@@ -4,14 +4,16 @@ const Workout = require("./Workout")
 
 const User = require('./User');
 
+const Ingredient = require('./Ingredient');
+
 User.hasMany(Recipe, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE'
   });
   
-  Recipe.belongsTo(User, {
-    foreignKey: 'user_id'
-  });
+Recipe.belongsTo(User, {
+  foreignKey: 'user_id'
+});
 
   User.hasMany(Workout, {
     foreignKey: 'user_id',
@@ -49,5 +51,15 @@ User.hasMany(Recipe, {
   //   foreignKey: 'workout_id'
   // });
 
-module.exports = { User, Recipe, Workout};
+Recipe.hasMany(Ingredient, {
+  foreignKey: 'recipe_id',
+  onDelete: 'CASCADE'
+})
+
+Ingredient.belongsTo(Recipe, {
+  foreignKey: 'recipe_id'
+})
+
+module.exports = { User, Recipe, Ingredient, Workout};
+
 

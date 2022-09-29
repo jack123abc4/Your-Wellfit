@@ -1,9 +1,38 @@
 <div class="text-center">
-  <h2>{{name}}</h2>
-  <p>
-    Calories: {{calories}}
-  </p>
+  <h2>{{recipe.name}}</h2>
+  <img src="{{recipe.image}}" alt="">
+  
+  <div>
+    <h3>Ingredients</h3>
+    <ul style="font-size:50%">
+    {{#each ingredients as |ingredient|}}
+      {{#if ingredient.active}}
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
+      {{else}}
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: line-through" state="inactive">{{ingredient.text}}</li>
+      {{/if}}
+    {{/each}}
+
+    </ul>
+  </div>
+  
+  
+  <div>
+    <h3>Nutrients</h3>
+      <ul style="font-size:50%">
+        <li>Calories: {{recipe.calories}}</li>
+        <li>Calcium: {{recipe.ca}}</li>
+        <li>Carbs: {{recipe.chocdf}}</li>
+        <li>Cholesterol: {{recipe.chole}}</li>
+        <li>Fat: {{recipe.fat}}</li>
+        <li>Iron: {{recipe.fe}}</li>
+        <li>Fiber: {{recipe.fibtg}}</li>
+        <li>Potassium: {{recipe.k}}</li>
+        <li>Sodium: {{recipe.na}}</li>
+        <li>Protein: {{recipe.procnt}}</li>
+        <li>Sugar: {{recipe.sugar}}</li>
+      </ul>
+  </div>
 </div>
 
-
-<script src="./js/recipe.js"></script>
+<script src="\js\recipe.js"></script>
