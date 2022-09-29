@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { User, Recipe} = require('../models');
+const { User, Recipe, Ingredient} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -40,17 +40,24 @@ router.get('/recipe/:id', async (req, res) => {
     });
     const recipe = recipeData.get({ plain: true });
 
-    let ingredientData = (await sequelize.query(
-      `SELECT text FROM ingredients
-        WHERE recipe_id = ${req.params.id}`))[0];
-    ingredientData = {ingredients: ingredientData.map((ingredient) => ingredient.text)};
-    console.log(ingredientData);
-      console.log(recipe);
+    // let ingredientData = (await sequelize.query(
+    //   `SELECT text FROM ingredients
+    //     WHERE recipe_id = ${req.params.id}`))[0];
+    // ingredientData = {ingredients: ingredientData.map((ingredient) => ingredient.text)};
+    // // console.log(ingredientData);
+    // //   console.log(recipe);
+    const ingredientData = await Ingredient.findAll({
+      where: {
+        recipe_id: req.params.id
+      }
+    });
+    const ingredients = ingredientData.map((ingredient) => ingredient.get({ plain: true }));
+    // console.log(ingredients);
 
     
     res.render('recipe', {
-      ...recipe,
-      ...ingredientData,
+      recipe,
+      ingredients,
       logged_in: req.session.logged_in
     });
   // } catch (err) {

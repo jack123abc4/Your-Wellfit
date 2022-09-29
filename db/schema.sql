@@ -56,6 +56,7 @@ CREATE TABLE ingredients (
     quantity INT,
     text TEXT,
     weight INT,
+    active BOOLEAN,
     recipe_id INT,
 
     FOREIGN KEY(recipe_id)
@@ -98,3 +99,5 @@ CREATE TABLE body_parts (
 );
     
 
+SELECT * FROM ingredients
+    WHERE id=1;

@@ -1,13 +1,16 @@
 <div class="text-center">
-  <h2>{{name}}</h2>
-  <img src="{{image}}" alt="">
+  <h2>{{recipe.name}}</h2>
+  <img src="{{recipe.image}}" alt="">
   
   <div>
     <h3>Ingredients</h3>
     <ul style="font-size:50%">
     {{#each ingredients as |ingredient|}}
-      <li>{{ingredient}}</li>
-    
+      {{#if ingredient.active}}
+      <li class="ingredient-list-element">{{ingredient.text}}</li>
+      {{else}}
+      <li class="ingredient-list-element" style="text-decoration: line-through">{{ingredient.text}}</li>
+      {{/if}}
     {{/each}}
 
     </ul>
@@ -17,17 +20,19 @@
   <div>
     <h3>Nutrients</h3>
       <ul style="font-size:50%">
-        <li>Calories: {{calories}}</li>
-        <li>Calcium: {{ca}}</li>
-        <li>Carbs: {{chocdf}}</li>
-        <li>Cholesterol: {{chole}}</li>
-        <li>Fat: {{fat}}</li>
-        <li>Iron: {{fe}}</li>
-        <li>Fiber: {{fibtg}}</li>
-        <li>Potassium: {{k}}</li>
-        <li>Sodium: {{na}}</li>
-        <li>Protein: {{procnt}}</li>
-        <li>Sugar: {{sugar}}</li>
+        <li>Calories: {{recipe.calories}}</li>
+        <li>Calcium: {{recipe.ca}}</li>
+        <li>Carbs: {{recipe.chocdf}}</li>
+        <li>Cholesterol: {{recipe.chole}}</li>
+        <li>Fat: {{recipe.fat}}</li>
+        <li>Iron: {{recipe.fe}}</li>
+        <li>Fiber: {{recipe.fibtg}}</li>
+        <li>Potassium: {{recipe.k}}</li>
+        <li>Sodium: {{recipe.na}}</li>
+        <li>Protein: {{recipe.procnt}}</li>
+        <li>Sugar: {{recipe.sugar}}</li>
       </ul>
   </div>
 </div>
+
+<script src="\js\recipe.js"></script>

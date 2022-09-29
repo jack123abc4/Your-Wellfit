@@ -40,6 +40,10 @@ Ingredient.init(
     weight: {
       type: DataTypes.INTEGER,
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
     
     recipe_id: {
       type: DataTypes.INTEGER,
