@@ -1,45 +1,48 @@
-const loginFormHandler = async (event) => {
+const newFormHandler = async (event) => {
     event.preventDefault();
   
-    const searchTerm = document.querySelector('#workout-search').value.trim();
-    console.log("SEARCH TERM", searchTerm, searchTerm===true)
-    if (searchTerm) {;
-        // const response = await getResults(searchTerm);
-        // console.log(response.json());
+    const exercise = document.querySelector('#workout-exercise').value.trim();
+    const bodypart = document.querySelector('#workout-bodypart').value.trim();
+    const equipment = document.querySelector('#workout-equipment').value.trim();
   
-    //   if (response.ok) {
-        document.location.replace('/');
-        console.log("Success!");
-    //   } else {
-    //     alert('Error');
-    //   }
+    if (exercise && bodypart && equipment) {
+      const response = await fetch(`/api/workouts`, {
+        method: 'POST',
+        body: JSON.stringify({ exercise, bodypart, equipment }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        document.location.replace('/workout');
+      } else {
+        alert('Failed to create workout');
+      }
+    }
+  };
+  
+  const delButtonHandler = async (event) => {
+    if (event.target.hasAttribute('data-id')) {
+      const id = event.target.getAttribute('data-id');
+  
+      const response = await fetch(`/api/workouts/${id}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        document.location.replace('/workout');
+      } else {
+        alert('Failed to delete workout');
+      }
     }
   };
   
   document
-    .querySelector('.search-form')
-    .addEventListener('submit', loginFormHandler);
+    .querySelector('.new-workout-form')
+    .addEventListener('submit', newFormHandler);
   
-async function getResults(searchTerm) {
-    const fullURL = searchTermToURL(searchTerm);
-    const response = await fetch(fullURL, {
-        method: 'GET', //GET is the default.
-        })
-        .then(function (response) {
-            // console.log(response);
-            return response.json();
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
-    return response;
-}
-
-// function searchTermToURL(searchTerm) {
-//     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
-// }
-
-
-
-
-
+  document
+    .querySelector('.workout-list')
+    .addEventListener('click', delButtonHandler);
+  
