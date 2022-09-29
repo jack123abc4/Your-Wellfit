@@ -1,6 +1,4 @@
-const router = require('express').Router();
-const sequelize = require('../config/connection');
-const { User, Recipe, Ingredient} = require('../models');
+const { User, Recipe, Workout} = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -22,6 +20,25 @@ router.get('/', async (req, res) => {
     res.render('homepage', { 
       recipes, 
          logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/workout', async (req, res) => {
+  try {
+    // Get all projects and JOIN with user data
+    const workoutData = await Workout.findAll();
+    console.log(workoutData)
+
+    // Serialize data so the template can read it
+    const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    res.render('workout', { 
+      workouts, 
+      logged_in: req.session.logged_in 
     });
   } catch (err) {
     res.status(500).json(err);
