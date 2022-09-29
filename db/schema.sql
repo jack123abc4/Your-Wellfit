@@ -56,9 +56,21 @@ CREATE TABLE ingredients (
     quantity INT,
     text TEXT,
     weight INT,
+     calories INT NOT NULL,
+    ca INT NOT NULL,
+    chocdf INT NOT NULL,
+    chole INT NOT NULL,
+    fat INT NOT NULL,
+    fe INT NOT NULL,
+    fibtg INT NULL,
+    k INT NOT NULL,
+    na INT NOT NULL,
+    procnt INT NOT NULL,
+    sugar INT NOT NULL,
     active BOOLEAN,
     original BOOLEAN,
     recipe_id INT,
+    
 
     FOREIGN KEY(recipe_id)
     REFERENCES recipes(id)

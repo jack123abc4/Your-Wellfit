@@ -156,7 +156,7 @@ router.get('/searchResults', async (req, res) => {
   }
 })
 
-  router.get('/recipe', (req, res) => {
+  router.get('/recipe/:id', (req, res) => {
     if (req.session.logged_in) {
       res.redirect('/recipe');
       return;
