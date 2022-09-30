@@ -32,9 +32,10 @@ router.post('/batch', async (req, res) => {
   // try {
     sequelize.query("DELETE FROM current_recipes");
     
-    
+    let currentRecipes = [];
     
     for (const recipe of req.body) {
+      console.log("RECIPE YIELD",recipe.yield);
       let recipeID = await sequelize.query(
         `SELECT id FROM recipes
         WHERE
@@ -44,7 +45,12 @@ router.post('/batch', async (req, res) => {
         //console.log("RECIPE ID", recipeID);
         if (!recipeID) {
           
-          const currentRecipe = await Recipe.create(recipe);
+          const currentRecipe = await Recipe.create({
+            ...recipe,
+            yield: recipe.yield,
+          });
+          
+          
           //console.log(recipe.name,recipe.calories);
           recipeID = await sequelize.query(
             `SELECT id FROM recipes
@@ -65,18 +71,29 @@ router.post('/batch', async (req, res) => {
           //console.log("Duplicate!", recipeID);
         }
       //console.log("Recipe decon",recipe);
+      currentRecipes.push(await Recipe.findByPk(recipeID.id));
       
       
       //console.log(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`)
       sequelize.query(`INSERT INTO current_recipes (recipe_id) VALUES (${recipeID.id})`);
       // db.query(INSERT r_id into current recipes)
     }
+    console.log("CURRENT RECIPES", JSON.stringify(currentRecipes));
 
-    res.status(200).json();
+    res.status(200).json(JSON.stringify(currentRecipes));
   // } catch (err) {
   //   res.status(400).json(err);
   // }
 });
+
+router.get('/ingredients/:id', async (req, res) => {
+  const ingredientData = await Ingredient.findAll({
+    where: {
+      recipe_id: req.params.id
+    }
+  });
+  res.status(200).json(ingredientData);
+})
 
 
 router.delete('/:id', withAuth, async (req, res) => {

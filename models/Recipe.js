@@ -75,6 +75,11 @@ Recipe.init(
       allowNull: false,
       defaultValue: 0,
     },
+    yield: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     image: {
       type: DataTypes.TEXT,
     },

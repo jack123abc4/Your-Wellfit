@@ -4,6 +4,7 @@ const User = require('./User');
 const Ingredient = require('./Ingredient');
 
 
+
 User.hasMany(Recipe, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE'
