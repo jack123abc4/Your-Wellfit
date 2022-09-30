@@ -71,65 +71,66 @@ const searchFormHandler = async (event) => {
           return data;
         });
         console.log("RESPONSE",response);
-        for (const recipe of JSON.parse(response)) {
-          console.log(recipe);
-          const foodID = "ef193ade";
-          const foodKey = "472b382be6ee874666d1ada17c97d073";
-          const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
-          console.log("ID:", recipe.id);
+        // for (const recipe of JSON.parse(response)) {
+        //   console.log(recipe);
+        //   const foodID = "ef193ade";
+        //   const foodKey = "472b382be6ee874666d1ada17c97d073";
+        //   const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
+        //   console.log("ID:", recipe.id);
     
-          const ingredientData = await fetch(`/api/recipes/ingredients/${recipe.id}`, {
-            method: 'GET'
-          })
-          .then((response) => response.json())
-          .then(function (data) {
-            console.log("RETURN FROM API",data);
-            return data;
-          });
+        //   const ingredientData = await fetch(`/api/recipes/ingredients/${recipe.id}`, {
+        //     method: 'GET'
+        //   })
+        //   .then((response) => response.json())
+        //   .then(function (data) {
+        //     console.log("RETURN FROM API",data);
+        //     return data;
+        //   });
           
-          console.log("INGREDIENT DATA:",ingredientData)
-          for (const ingredient of ingredientData) {
-            const data = {
-              "ingredients": [
-                {
-                  "quantity": ingredient.quantity,
-                  "measureURI": ingredient.measure,
-                  "foodId": ingredient.food_id
-                }
-              ]
-            };
-            // console.log(JSON.stringify(data));
-            fetch(foodURL, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                headers: {
-                'Content-Type': 'application/json'
+        //   console.log("INGREDIENT DATA:",ingredientData)
+        //   for (const ingredient of ingredientData) {
+        //     const data = {
+        //       "ingredients": [
+        //         {
+        //           "quantity": ingredient.quantity,
+        //           "measureURI": ingredient.measure,
+        //           "foodId": ingredient.food_id
+        //         }
+        //       ]
+        //     };
+        //     // console.log(JSON.stringify(data));
+        //     fetch(foodURL, {
+        //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        //         mode: 'cors', // no-cors, *cors, same-origin
+        //         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //         credentials: 'same-origin', // include, *same-origin, omit
+        //         headers: {
+        //         'Content-Type': 'application/json'
 
-                },
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer', 
-                body: JSON.stringify(data) 
-            })
-            .then(function (data) {
-              console.log("INGREDIENT DATA", data.json()); 
-            });
+        //         },
+        //         redirect: 'follow',
+        //         referrerPolicy: 'no-referrer', 
+        //         body: JSON.stringify(data) 
+        //     })
+        //     .then(function (data) {
+        //       console.log("INGREDIENT DATA", data.json()); 
+        //     });
           
           
-          };
+        //   };
           
-        }
+        // }
         
             
         
-          // if (response.ok) {
-          //   // If successful, redirect the browser to the profile page
-          //   document.location.replace('/searchResults');
-          //   //console.log("Success from search.js");
-          // } else {
-          //   alert(response.statusText);
-          // }
+          if (response) {
+            // If successful, redirect the browser to the profile page
+            document.location.replace('/searchResults');
+            //console.log("Success from search.js");
+          } else {
+            alert(response.statusText);
+          }
+        
   };
 }
   
