@@ -37,6 +37,14 @@ h2, h3, ul {
   color: white;
 }
 
+.modal {
+  color: black;
+}
+
+#recipe-header {
+  margin-top: 200px
+}
+
 /* body {
   font-family: Arial;
   margin: 0;

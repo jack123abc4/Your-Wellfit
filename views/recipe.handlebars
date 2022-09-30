@@ -1,14 +1,40 @@
-<h1>WellFit Recipes</h1>
 
-<div class="text-center">
-  <h2 class="text-white" id="{{recipe.id}}">{{recipe.name}}</h2>
+<h1 id="recipe-header">Nutritional Info:</h1>
+
+<div class="favorites-container text-center">
+  <div class="recipe-name">
+  <h2>{{recipe.name}}</h2>  
+  </div>
   <img src="{{recipe.image}}" alt="">
+
   <br>
   <br>
-  
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="replace-btn">Replace an Ingredient</a>
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
+  <div class="recipe-buttons">
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="replace-btn" data-toggle="modal" data-target="#removeModal">Replace an Ingredient</a>
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
+
+<br>
+<br>
+<div>
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="favorites-btn"> <i class="fa-solid fa-heart"></i> Save to Favorites</a>
+</div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" id="removeModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" tabindex="-1" id="ingredientModal" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
@@ -25,7 +51,8 @@
 </div>
 
 
-  <div>
+  <div class="recipe-items">
+    <div class="recipe-row">
     <h3>Ingredients</h3>
     <ul>
     {{#each ingredients as |ingredient|}}
@@ -35,11 +62,10 @@
       <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: line-through" state="inactive">{{ingredient.text}}</li>
       {{/if}}
     {{/each}}
-
     </ul>
-  </div>
-  
-  <div>
+    </div>
+
+    <div class="recipe-row">
     <h3>Nutrients</h3>
       <ul>
         <li>Calories: {{recipe.calories}}</li>
@@ -56,5 +82,7 @@
       </ul>
   </div>
 </div>
+
+
 
 <script src="\js\recipe.js"></script>

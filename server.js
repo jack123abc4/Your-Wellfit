@@ -4,12 +4,19 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
-// const flash = require('express-flash');
-// const initializePassport = require('./public/js/passport-config');
-// const passport = require('passport');
-
+const flash = require('express-flash');
+const bodyParser = require('body-parser');
+const initializePassport = require('./public/js/passport-config');
+const passport = require('passport');
+const methodOverride = require('method-override');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// require('./config/passport/passport.js');
+
+initializePassport(passport, email => {
+  return users.find(user => user.email === email),
+  id => users.find(user => user.id === id)
+});
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,16 +39,20 @@ const sess = {
   })
 };
 
-app.use(session(sess));
-// app.use(flash());
-// app.use(passport.initialize());
+app.use(session(sess)); 
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride('_method'));
 
 // Inform Express.js on which template engine to use
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);

@@ -5,13 +5,6 @@ const { QueryTypes } = require('sequelize');
 const { User, Recipe, Ingredient } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// router.get('/updateNutrients/:id', async (req, res) => {
-//     const 
-
-// }
-
-// )
-
 
 router.post('/', withAuth, async (req, res) => {
   try {

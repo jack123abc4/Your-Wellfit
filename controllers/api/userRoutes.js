@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
+    const validPassword = userData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
@@ -54,15 +54,16 @@ router.post('/login', async (req, res) => {
 router.post('/signup', async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    URLSearchParams.push({
+    User.push({
       id: Date.now().toString(),
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword
-    })
+    });
+    res.status(200).send('Signup successful! Please login to enjoy the site.');
     res.redirect('/login')
   } catch {
-res.redirect('/signup')
+res.redirect('/login')
   }
   req.body.email
 });
