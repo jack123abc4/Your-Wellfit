@@ -3,9 +3,26 @@
 <div class="text-center">
   <h2 class="text-white">{{recipe.name}}</h2>
   <img src="{{recipe.image}}" alt="">
+  <br>
+  <br>
   
 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
 <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="replace-btn">Replace an Ingredient</a>
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
+
+<div class="modal fade" tabindex="-1" id="ingredientModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
   <div>
@@ -21,7 +38,6 @@
 
     </ul>
   </div>
-  
   
   <div>
     <h3>Nutrients</h3>
