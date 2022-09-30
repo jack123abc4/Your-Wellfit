@@ -78,6 +78,15 @@ router.post('/batch', async (req, res) => {
   // }
 });
 
+router.get('/ingredients/:id', async (req, res) => {
+  const ingredientData = await Ingredient.findAll({
+    where: {
+      recipe_id: req.params.id
+    }
+  });
+  res.status(200).json(ingredientData);
+})
+
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
