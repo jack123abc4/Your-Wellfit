@@ -13,9 +13,9 @@
                 <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-                <form class="form login-form">
+                <form class="form login-form" id="loginForm" action="/login" method="POST">
                   <div class="form-group">
-                    <label for="inputEmail">Email: </label>
+                    <label for="inputEmail" type="email" >Email: </label>
                     <input class="form-control" placeholder="Email address" type="text" id="inputEmail" />
                   </div>
                   <div class="form-group">
@@ -25,14 +25,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Login</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onClick="loginFormHandler()">Login</button>
+              {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
+              {{!-- <a href="/login">New around here? Sign up!</a> --}}
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 <div class="modal fade" tabindex="-1" id="signupModal" data-keyword="false" data-backdrop="static">
@@ -43,24 +42,25 @@
                 <h4 class="modal-title">Sign Up</h4>
             </div>
             <div class="modal-body">
-                <form class="form signup-form">
+                <form class="form signup-form" action="/signup" method="POST">
                   <div class="form-group">
                     <label for="signupUsername">Username: </label>
-                    <input class="form-control" placeholder="Username" type="text" id="inputUsername" />
+                    <input class="form-control" placeholder="Username" type="text" id="signupUsername" />
                   </div>
                   <div class="form-group">
                     <label for="signupEmail">Email: </label>
-                    <input class="form-control" placeholder="Email address" type="text" id="inputEmail" />
+                    <input class="form-control" placeholder="Email address" type="text" id="signupEmail" />
                   </div>
                   <div class="form-group">
                     <label for="signupPassword">Password: </label>
-                    <input class="form-control" placeholder="Password" type="password" id="inputPassword" />
+                    <input class="form-control" placeholder="Password" type="password" id="signupPassword" />
                   </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Sign Up</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onClick="signupFormHandler()">Sign Up</button>
+              {{!-- <a href="/login">Already have an account? Log in!</a> --}}
+              {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
             </div>
         </div>
     </div>
@@ -68,4 +68,4 @@
 
 
 
-<script src="\js\recipe.js"></script>
+<script src=".\js\login.js"></script>

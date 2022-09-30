@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     {{!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"> --}}
     <script src="https://kit.fontawesome.com/45142689e7.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./public/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body class="bg-hero bg-no-repeat bg-cover bg-center bg-fixed font-sans text-white leading-normal tracking-normal" id="background-image" style="background-image: url('https://img.freepik.com/free-photo/healthy-life-sport-concept-sneakers-with-apples-towel-bottle-water-wooden-background-copy-space_1220-1474.jpg?w=1800&t=st=1661792367~exp=1661792967~hmac=b4c659e78a3194557b1fc44b536f3d4be08c2f131d4fb75a5000ff868426746f');">
@@ -41,7 +41,8 @@
 			</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-user-slash"></i> Logout</a>
+              <button class="button" id="logout"><i class="fa-solid fa-user-slash"></i>Logout</button>
+            {{!-- <li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-user-slash"></i> Logout</a> --}}
 			</li>
             {{!-- {{else}}
             <li class="nav-item"><a class="nav-link" href="//login"><i class="fa-solid fa-user-plus"></i> Login/Sign Up</a>
