@@ -70,7 +70,8 @@ const searchFormHandler = async (event) => {
           console.log("DATA",data);
           return data;
         });
-        console.log("RESPONSE",response);
+      
+        // console.log("RESPONSE",response);
         // for (const recipe of JSON.parse(response)) {
         //   console.log(recipe);
         //   const foodID = "ef193ade";
@@ -123,13 +124,13 @@ const searchFormHandler = async (event) => {
         
             
         
-          if (response) {
-            // If successful, redirect the browser to the profile page
-            document.location.replace('/searchResults');
-            //console.log("Success from search.js");
-          } else {
-            alert(response.statusText);
-          }
+        if (response) {
+          // If successful, redirect the browser to the profile page
+          document.location.replace('/searchResults');
+          //console.log("Success from search.js");
+        } else {
+          alert(response.statusText);
+        }
         
   };
 }
@@ -141,3 +142,4 @@ const searchFormHandler = async (event) => {
 function searchTermToURL(searchTerm) {
     return ("https://api.edamam.com/api/recipes/v2?type=public&q=" + searchTerm + "&app_id=03f13ddd&app_key=02579918e4ba389d465eaa6dd2ed2a99");
 }
+
