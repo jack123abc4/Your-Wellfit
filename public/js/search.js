@@ -31,7 +31,7 @@ const searchFormHandler = async (event) => {
         console.log("HITS", results.hits);
         const recipeData = results.hits.map(result => {
             // console.log(result);
-            // console.log(result.recipe);
+            console.log(result.recipe.yield);
             // const nutrients = nutrientsToInclude.map((nutrient) => {
               
               // console.log(totalNutrients,totalNutrients.CA,totalNutrients.CA.quantity);
@@ -51,6 +51,7 @@ const searchFormHandler = async (event) => {
               na: totalNutrients.NA.quantity,
               procnt: totalNutrients.PROCNT.quantity,
               sugar: totalNutrients.SUGAR.quantity,
+              yield: result.recipe.yield,
               image: result.recipe.image,
               user_id: 1,
               ingredientLines: result.recipe.ingredientLines,
@@ -58,27 +59,36 @@ const searchFormHandler = async (event) => {
               };
         });
         console.log("RECIPE DATA", JSON.stringify(recipeData));
-        
         const response = await fetch('/api/recipes/batch', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(recipeData),
-            
-          });
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(recipeData),
+          
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("DATA",data);
+          return data;
+        });
+        console.log("RESPONSE",response);
+        for (const recipe of JSON.parse(response)) {
+          console.log(recipe);
           const foodID = "ef193ade";
           const foodKey = "472b382be6ee874666d1ada17c97d073";
           const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
-          console.log("ID:", recipeData.id);
+          console.log("ID:", recipe.id);
     
-          const ingredientData = await fetch(`/api/recipes/ingredients/${recipeData.id}`, {
+          const ingredientData = await fetch(`/api/recipes/ingredients/${recipe.id}`, {
             method: 'GET'
           })
           .then((response) => response.json())
           .then(function (data) {
             console.log("RETURN FROM API",data);
+            return data;
           });
           
-          for (const ingredient of JSON.stringify(ingredientData)) {
+          console.log("INGREDIENT DATA:",ingredientData)
+          for (const ingredient of ingredientData) {
             const data = {
               "ingredients": [
                 {
@@ -108,8 +118,11 @@ const searchFormHandler = async (event) => {
           
           
           };
+          
+        }
+        
             
-        console.log("RESPONSE: ", response.json());
+        
           // if (response.ok) {
           //   // If successful, redirect the browser to the profile page
           //   document.location.replace('/searchResults');

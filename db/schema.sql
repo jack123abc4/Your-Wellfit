@@ -25,6 +25,7 @@ CREATE TABLE recipes (
     na INT NOT NULL,
     procnt INT NOT NULL,
     sugar INT NOT NULL,
+    yield INT NOT NULL,
     image TEXT,
 
 
