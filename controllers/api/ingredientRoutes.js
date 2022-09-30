@@ -6,7 +6,10 @@ const { Ingredient } = require('../../models');
 
 router.put('/:id', async (req, res) => {
     // try{
-        const ingredientData = await Ingredient.update(req.body, {
+        console.log("ID",req.params.id,"REQ BODY",req.body);
+        
+        const ingredientData = await Ingredient.update({...req.body
+        }, {
             where: {
                 id: req.params.id,
             }

@@ -1,5 +1,88 @@
 let clickMode = 'subtract';
 
+async function populateNutrition(recipe) {
+    const recipeID = document.querySelector('h2').getAttribute("id");
+    console.log("RECIPE ID",recipeID);
+    const foodID = "ef193ade";
+    const foodKey = "472b382be6ee874666d1ada17c97d073";
+    const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
+
+    const ingredientData = await fetch(`/api/recipes/ingredients/${recipeID}`, {
+    method: 'GET'
+    })
+    .then((response) => response.json())
+    .then(function (data) {
+    console.log("RETURN FROM API",data);
+    return data;
+    });
+    
+    const ingredientObjects = [];
+    for (const ingredient of ingredientData) {
+        console.log("INGREDIENT ", ingredient);
+        ingredientObjects.push(
+            {   "id": ingredient.id,
+                "ingredients": [{
+                    "quantity": ingredient.quantity,
+                    "measureURI": ingredient.measure,
+                    "foodId": ingredient.food_id
+                }]
+            }
+        );  
+    }
+
+    console.log(JSON.stringify(ingredientObjects));
+    for (const i of ingredientObjects) {
+        const body = `
+        {
+            "ingredients": ${JSON.stringify(i.ingredients)}
+    }
+        `
+        console.log(JSON.stringify(i.ingredients));
+        await fetch(foodURL, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+            'Content-Type': 'application/json'
+    
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer', 
+            body: body
+        })
+        .then((response) => response.json())
+        .then(function (data) {
+            console.log("INGREDIENT DATA", data);
+            let quantities = {};
+            for (const nutrient of Object.keys(data.totalNutrients)) {
+                console.log(nutrient,data.totalNutrients,data.totalNutrients[nutrient].quantity);
+                
+                quantities[nutrient.toLowerCase()] = data.totalNutrients[nutrient].quantity;
+            
+            }
+            quantities["calories"] = data.calories;
+            console.log(quantities);
+            
+            // console.log(quantities);
+            // const ingredients = ingredientData.map((ingredient) => 
+            // ingredient.get({ plain: true }));
+            console.log(JSON.stringify({
+                ...data.totalNutrients
+            }));
+            const nutritionPut = fetch(`/api/ingredients/${i.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(quantities)
+                
+            });
+
+        });
+    }
+    
+    
+    
+  }
 
 const ingredientClick = async (event) => {
     // console.log(event.target);
@@ -71,3 +154,4 @@ const addBtn = document.querySelector('#add-btn');
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
 
+populateNutrition();
