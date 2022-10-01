@@ -5,12 +5,46 @@ const { QueryTypes } = require('sequelize');
 const { User, Recipe, Ingredient } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// router.get('/updateNutrients/:id', async (req, res) => {
-//     const 
+router.put('/updateNutrients/:id', async (req, res) => {
+  console.log("paramsID",req.params.id);
+  
+  await sequelize.query(`
+  UPDATE recipes, (
+    SELECT 
+        SUM(calories) AS total_calories,
+        SUM(ca) AS total_calcium,
+        SUM(chocdf) AS total_carbs,
+        SUM(chole) AS total_cholesterol,
+        SUM(fat) AS total_fat,
+        SUM(fe) AS total_iron,
+        SUM(fibtg) AS total_fiber,
+        SUM(k) AS total_potassium,
+        SUM(na) AS total_sodium,
+        SUM(procnt) AS total_protein,
+        SUM(sugar) AS total_sugar
+    FROM ingredients
+    WHERE recipe_id=${req.params.id} AND active=1
+) AS src
+SET 
+    calories = src.total_calories,
+    ca = src.total_calcium,
+    chocdf = src.total_carbs,
+    chole = src.total_cholesterol,
+    fat = src.total_fat,
+    fe = src.total_iron,
+    fibtg = src.total_fiber,
+    k = src.total_potassium,
+    na = src.total_sodium,
+    procnt = src.total_protein,
+    sugar = src.total_sugar
+  WHERE
+    id=${req.params.id};
+  `);
+  const recipeToUpdate = await Recipe.findByPk(req.params.id);
+  return res.status(200).json(recipeToUpdate.get({plain:true}))
 
-// }
+});
 
-// )
 
 
 router.post('/', withAuth, async (req, res) => {
@@ -95,6 +129,12 @@ router.get('/ingredients/:id', async (req, res) => {
   res.status(200).json(ingredientData);
 })
 
+router.get('/activeIngredients/:id', async (req,res) => {
+  return res.status(200).json(await sequelize.query(`
+  SELECT COUNT(active) AS count FROM ingredients 
+  WHERE recipe_id=${req.params.id} AND active=1; 
+  `, { type: QueryTypes.SELECT, plain : true }))
+})
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
