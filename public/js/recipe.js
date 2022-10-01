@@ -1,7 +1,7 @@
+
 let clickMode = 'subtract';
 const recipeID = document.querySelector('h2').getAttribute("id");
 async function populateNutrition() {
-    
     console.log("RECIPE ID",recipeID);
     const foodID = "ef193ade";
     const foodKey = "472b382be6ee874666d1ada17c97d073";
@@ -30,6 +30,8 @@ async function populateNutrition() {
             }
         );  
     }
+
+    
 
     console.log(JSON.stringify(ingredientObjects));
     for (const i of ingredientObjects) {
@@ -78,10 +80,29 @@ async function populateNutrition() {
 
         });
     }
+    updateNutrients();
     
     
     
   }
+
+async function updateNutrients() {
+    nutritionList = document.querySelector("#nutrient-list");
+    nutritionListSpans = nutritionList.querySelectorAll("span");
+    const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(function (data) {
+        console.log(data);
+        for (const l of nutritionListSpans) {
+            l.textContent = Math.round(data[l.getAttribute("id")]);
+        }
+    })
+    
+    
+}
 
 const ingredientClick = async (event) => {
     // console.log(event.target);
@@ -110,14 +131,8 @@ const ingredientClick = async (event) => {
             console.log("RECIPE ID",recipeID);
             event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
             event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
-            const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(function (data) {
-                console.log(data);
-            })
+            updateNutrients();
+            
         }
     }
      

@@ -136,6 +136,10 @@ router.get('/activeIngredients/:id', async (req,res) => {
   `, { type: QueryTypes.SELECT, plain : true }))
 })
 
+router.get('/nutrients/:id'), async (req, res) => {
+  
+}
+
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     const recipeData = await Recipe.destroy({
