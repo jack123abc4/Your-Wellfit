@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WellFit</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {{!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"> --}}
+    <script src="https://kit.fontawesome.com/45142689e7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="bg-hero bg-no-repeat bg-cover bg-center bg-fixed font-sans text-white leading-normal tracking-normal" id="background-image" style="background-image: url('https://img.freepik.com/free-photo/healthy-life-sport-concept-sneakers-with-apples-towel-bottle-water-wooden-background-copy-space_1220-1474.jpg?w=1800&t=st=1661792367~exp=1661792967~hmac=b4c659e78a3194557b1fc44b536f3d4be08c2f131d4fb75a5000ff868426746f');">
+    <!-- Nav bar - logo on left, links to other html pages on left -->
+	<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">WELLFIT</a>
+    </div>
+    <ul class="nav navbar-nav">
+            <li class="active"><a class="nav-link" href="/"><i class="fa-solid fa-house"></i> Home</a>
+			</li>
+            {{!-- {{#if logged_in}} --}}
+            <li class="nav-item"><a class="nav-link" href="/profile"><i class="fa-solid fa-heart"></i> Profile</a>
+			</li>
+            <li class="nav-item"><a class="nav-link" href="/recipe"><i class="fa-solid fa-book"></i> Recipes</a>
+			</li>
+            <li class="nav-item"><a class="nav-link" href="/workout"><i class="fa-solid fa-dumbbell"></i> Workouts</a>
+			</li>
+            <li class="nav-item"><a class="nav-link" href="/search"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+			</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <button class="button" id="logout"><i class="fa-solid fa-user-slash"></i>Logout</button>
+            {{!-- <li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-user-slash"></i> Logout</a> --}}
+			</li>
+            {{!-- {{else}}
+            <li class="nav-item"><a class="nav-link" href="//login"><i class="fa-solid fa-user-plus"></i> Login/Sign Up</a>
+			</li>
+            {{/if}} --}}
+                </ul>
+                 </div>
+    </nav>
+    </header>
+
+
+  
+    <main class="container">
+
+          {{{ body }}}
+
+    </main>
+
+    <footer>
+      
+    </footer>
+  </div>
+
+
+{{#if logged_in}}
+  <script src="/js/logout.js"></script>
+  {{/if}} 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

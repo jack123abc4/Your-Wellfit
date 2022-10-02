@@ -1,48 +1,38 @@
-const newFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const exercise = document.querySelector('#workout-exercise').value.trim();
-    const bodypart = document.querySelector('#workout-bodypart').value.trim();
-    const equipment = document.querySelector('#workout-equipment').value.trim();
-  
-    if (exercise && bodypart && equipment) {
-      const response = await fetch(`/api/workouts`, {
-        method: 'POST',
-        body: JSON.stringify({ exercise, bodypart, equipment }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+const logFiller = async (event) => {
+  event.preventDefault();
+  console.log("buttonclick");
+
+  const exercise = document.querySelector("#exerciseInput").value.trim();
+  const sets = document.querySelector("#setsInput").value.trim();
+  const reps = document.querySelector("#repsInput").value.trim();
+  const weight = document.querySelector("#weightInput").value.trim();
+  const comments = document.querySelector("#comments").value.trim();
+
+  if (exercise && sets && reps && weight) {
+    console.log("hasFields");
+    const body = JSON.stringify({ exercise, sets, reps, weight, comments });
+    console.log(body);
+
+    const response = await fetch(`/api/workouts/add`, {
+      method: "POST",
+      body: JSON.stringify({ exercise, sets, reps, weight, comments }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(function (data) {
+        console.log(data);
       });
-  
-      if (response.ok) {
-        document.location.replace('/workout');
-      } else {
-        alert('Failed to create workout');
-      }
+
+    if (response.ok) {
+    document.location.replace("/workout");
+    } else {
+      alert('Failed to create workout');
     }
-  };
-  
-  const delButtonHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-      const id = event.target.getAttribute('data-id');
-  
-      const response = await fetch(`/api/workouts/${id}`, {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        document.location.replace('/workout');
-      } else {
-        alert('Failed to delete workout');
-      }
-    }
-  };
-  
-  document
-    .querySelector('.new-workout-form')
-    .addEventListener('submit', newFormHandler);
-  
-  document
-    .querySelector('.workout-list')
-    .addEventListener('click', delButtonHandler);
-  
+  }
+};
+
+const logButton = document.querySelector("#testlog");
+console.log(logButton);
+logButton.addEventListener("submit", logFiller);

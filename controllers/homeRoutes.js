@@ -33,25 +33,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/workout', async (req, res) => {
-  try {
-    // Get all projects and JOIN with user data
-    const workoutData = await Workout.findAll();
-    console.log(workoutData)
-
-    // Serialize data so the template can read it
-    const workouts = workoutData.map((workout) => workout.get({ plain: true }));
-
-    // Pass serialized data and session flag into template
-    res.render('workout', { 
-      workouts, 
-      logged_in: req.session.logged_in 
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 router.get('/recipe/:id', async (req, res) => {
   // try {
     const recipeData = await Recipe.findByPk(req.params.id, {
@@ -186,15 +167,45 @@ router.get('/searchResults', async (req, res) => {
     res.render('recipe');
   });
 
-  router.get('/workout', (req, res) => {
+  router.get('/workout', async (req, res) => {
+    try {
+      const workoutData = await Workout.findAll();
+      console.log(workoutData)
+  
+      const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+  
+      res.render('workout', { 
+        workouts, 
+        logged_in: req.session.logged_in 
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  router.get('/addworkout', async (req, res) => {
+    try {
+      const workoutData = await Workout.findAll();
+      console.log(workoutData)
+      
+      const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+  
+      res.render('addworkout', { 
+        workouts, 
+        logged_in: req.session.logged_in 
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  router.get('/viewworkout/:id', (req, res) => {
     if (req.session.logged_in) {
-      res.redirect('/workout');
+      res.redirect('/viewworkout');
       return;
     }
   
-    res.render('workout');
+    res.render('viewworkout');
   });
-
-
 
 module.exports = router;
