@@ -82,6 +82,7 @@ async function populateNutrition() {
         });
     }
     updateNutrients();
+}
     
 async function updateNutrients() {
     nutritionList = document.querySelector("#nutrient-list");
@@ -166,8 +167,7 @@ const ingredientClick = async (event) => {
         replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
         replaceModal.querySelector("#input-food").setAttribute("value",ingredientObject.food);
     }
-    }
-    else if (clickMode === 'replace') {
+    
      
 };
 
@@ -276,6 +276,6 @@ function updateServingSize() {
   
 
 populateNutrition();
-}
+
 
 init();
