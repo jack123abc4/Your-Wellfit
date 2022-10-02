@@ -1,7 +1,8 @@
-let clickMode = 'subtract';
 
-async function populateNutrition(recipe) {
-    const recipeID = document.querySelector('h2').getAttribute("id");
+let clickMode = 'subtract';
+const recipeID = document.querySelector('h2').getAttribute("id");
+
+async function populateNutrition() {
     console.log("RECIPE ID",recipeID);
     const foodID = "ef193ade";
     const foodKey = "472b382be6ee874666d1ada17c97d073";
@@ -19,16 +20,19 @@ async function populateNutrition(recipe) {
     const ingredientObjects = [];
     for (const ingredient of ingredientData) {
         console.log("INGREDIENT ", ingredient);
+        console.log("BODY DATA",ingredient.quantity,ingredient.measure,ingredient.food_id);
         ingredientObjects.push(
             {   "id": ingredient.id,
                 "ingredients": [{
-                    "quantity": ingredient.quantity,
+                    "quantity": parseFloat(ingredient.quantity),
                     "measureURI": ingredient.measure,
                     "foodId": ingredient.food_id
                 }]
             }
         );  
     }
+
+    
 
     console.log(JSON.stringify(ingredientObjects));
     for (const i of ingredientObjects) {
@@ -37,7 +41,7 @@ async function populateNutrition(recipe) {
             "ingredients": ${JSON.stringify(i.ingredients)}
     }
         `
-        console.log(JSON.stringify(i.ingredients));
+        console.log("BODY", body);
         await fetch(foodURL, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -56,7 +60,7 @@ async function populateNutrition(recipe) {
             console.log("INGREDIENT DATA", data);
             let quantities = {};
             for (const nutrient of Object.keys(data.totalNutrients)) {
-                console.log(nutrient,data.totalNutrients,data.totalNutrients[nutrient].quantity);
+                // console.log(nutrient,data.totalNutrients,data.totalNutrients[nutrient].quantity);
                 
                 quantities[nutrient.toLowerCase()] = data.totalNutrients[nutrient].quantity;
             
@@ -67,9 +71,7 @@ async function populateNutrition(recipe) {
             // console.log(quantities);
             // const ingredients = ingredientData.map((ingredient) => 
             // ingredient.get({ plain: true }));
-            console.log(JSON.stringify({
-                ...data.totalNutrients
-            }));
+            console.log(JSON.stringify(quantities));
             const nutritionPut = fetch(`/api/ingredients/${i.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -79,33 +81,82 @@ async function populateNutrition(recipe) {
 
         });
     }
+    updateNutrients();
+    
+async function updateNutrients() {
+    nutritionList = document.querySelector("#nutrient-list");
+    nutritionListSpans = nutritionList.querySelectorAll("span");
+    const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(function (data) {
+        console.log(data);
+        for (const l of nutritionListSpans) {
+            l.textContent = Math.round(data[l.getAttribute("id")]);
+        }
+    })
     
     
+}
+
+async function updateNutrients() {
+    nutritionList = document.querySelector("#nutrient-list");
+    nutritionListSpans = nutritionList.querySelectorAll("span");
+    const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(function (data) {
+        console.log(data);
+        for (const l of nutritionListSpans) {
+            l.textContent = Math.round(data[l.getAttribute("id")]);
+        }
+    })
     
-  }
+    
+}
 
 const ingredientClick = async (event) => {
-    // console.log(event.target);
-      if (clickMode === 'subtract')
-     { const ingredientID = event.target.getAttribute("id").split("-")[3];
+    console.log(event.target.parentElement);
+      if (clickMode === 'subtract') {
+        const numActive = await fetch(`/api/recipes/activeIngredients/${recipeID}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(function (data) {
+            console.log("NUM ACTIVE",data.count);
+            return data.count;
+        });
+        const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
         // console.log("ID:",ingredientID);
         const ingredientState = event.target.getAttribute("state");
         // console.log("State:",ingredientState);
-        const response = await fetch(`/api/ingredients/${ingredientID}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({active: ingredientState === "active" ? false : true})
+        if (numActive > 1 || ingredientState === "inactive") {
             
-        });
-        // console.log(response.json());
-        const recipeID = response.recipe_id;
-        event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
-        event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
-        const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        })
+            const response = await fetch(`/api/ingredients/${ingredientID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({active: ingredientState === "active" ? false : true})
+                
+            });
+            // console.log(response.json());
+            console.log("RECIPE ID",recipeID);
+            // event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+            event.target.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
+            // class="btn btn-primary btn-lg active"
+            event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
+            updateNutrients();
+            
+        }
     }
+    else if (clickMode === 'replace') {
+
+    }
+    }
+    else if (clickMode === 'replace') {
      
 };
 
@@ -123,7 +174,12 @@ const subtractBtnClick = async (event) => {
         subtractBtn.setAttribute("aria-pressed", "true");
         replaceBtn.setAttribute("state", "inactive");
         replaceBtn.setAttribute("aria-pressed", "false");
+        const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
+        for (const el of ingredientElements) {
+            el.setAttribute("data-target","#");
+        }
     }
+    
 }
 
 const replaceBtnClick = async (event) => {
@@ -133,6 +189,10 @@ const replaceBtnClick = async (event) => {
         replaceBtn.setAttribute("aria-pressed", "true");
         subtractBtn.setAttribute("state", "inactive");
         subtractBtn.setAttribute("aria-pressed", "false");
+        const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
+        for (const el of ingredientElements) {
+            el.setAttribute("data-target","#replaceModal");
+        }
     }
 }
 
@@ -170,7 +230,8 @@ const addBtn = document.querySelector('#add-btn');
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
 
-var servingInputs = document.querySelector('serving-size-input')
+function init() {
+    var servingInputs = document.querySelector('serving-size-input')
 for (var i = 0; i < servingInputs.length; i++) {
     var input = servingInputs[i]
     input.addEventListener('change', servingChanged)
@@ -204,3 +265,8 @@ function updateServingSize() {
   
 
 populateNutrition();
+}
+
+init();
+
+

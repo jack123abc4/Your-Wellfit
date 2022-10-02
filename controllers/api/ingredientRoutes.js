@@ -16,7 +16,7 @@ router.put('/:id', async (req, res) => {
         });
         const ingredient = await Ingredient.findByPk(req.params.id);
         // console.log(ingredient.get());
-        // console.log(ingredient.get({plain:true}));
+        console.log(ingredient.get({plain:true}));
         res.status(200).json(ingredient.get());
     // }
     // catch (err) {

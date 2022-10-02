@@ -34,10 +34,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Info</h4>
+                <h4 class="modal-title">Add An Ingredient</h4>
             </div>
             <div class="modal-body">
-                <p></p>
+                <p>TEXT CONTENT</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="replaceModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Replace An Ingredient</h4>
+            </div>
+            <div class="modal-body">
+                <p>TEXT CONTENT</p>
             </div>
         </div>
     </div>
@@ -57,20 +71,14 @@
     </div>
 </div>
 
-<div class="serving-size-row">
-    <p>Serving Size: </p>
-    <input class="serving-size-input" type="number" value="2">
-</div>
-</div>
-  <div class="recipe-items">
-    <div class="recipe-row ">
-    <h3 class="text-center">Ingredients</h3>
-    <ul class="ingredient-list">
+  <div>
+    <h3>Ingredients</h3>
+    <ul id="ingredient-list">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" data-target="#">{{ingredient.text}}</a></li>
       {{else}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: line-through" state="inactive">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a href="#" class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" data-target="#">{{ingredient.text}}</a></li>
       {{/if}}
     {{/each}}
     </ul>
@@ -78,18 +86,18 @@
 
     <div class="recipe-row">
     <h3 class="text-center">Nutrients</h3>
-      <ul class="nutrient-list">
-        <li>Calories: {{recipe.calories}}</li>
-        <li>Calcium: {{recipe.ca}}</li>
-        <li>Carbs: {{recipe.chocdf}}</li>
-        <li>Cholesterol: {{recipe.chole}}</li>
-        <li>Fat: {{recipe.fat}}</li>
-        <li>Iron: {{recipe.fe}}</li>
-        <li>Fiber: {{recipe.fibtg}}</li>
-        <li>Potassium: {{recipe.k}}</li>
-        <li>Sodium: {{recipe.na}}</li>
-        <li>Protein: {{recipe.procnt}}</li>
-        <li>Sugar: {{recipe.sugar}}</li>
+      <ul id="nutrient-list" class="nutrient-list">
+        <li>Calories: <span id="calories"></span></li>
+        <li>Calcium: <span id="ca"></span></li>
+        <li>Carbs: <span id="chocdf"></span></li>
+        <li>Cholesterol: <span id="chole"></span></li>
+        <li>Fat: <span id="fat"></span></li>
+        <li>Iron: <span id="fe"></span></li>
+        <li>Fiber: <span id="fibtg"></span></li>
+        <li>Potassium: <span id="k"></span></li>
+        <li>Sodium: <span id="na"></span></li>
+        <li>Protein: <span id="procnt"></span></li>
+        <li>Sugar: <span id="sugar"></span></li>
       </ul>
   </div>
 </div>
