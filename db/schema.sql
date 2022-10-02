@@ -65,48 +65,22 @@ CREATE TABLE ingredients (
     ON DELETE SET NULL
 );
 
-CREATE TABLE workouts (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    exercise VARCHAR(100) NOT NULL,
-    bodypart VARCHAR(100) NOT NULL,
-    equipment VARCHAR(100) NOT NULL,
+CREATE TABLE workouts ( 
+    id INT NOT NULL AUTO_INCREMENT, 
+    exercise VARCHAR(45) NOT NULL, 
+    sets INT NOT NULL, 
+    reps INT NOT NULL, 
+    weight INT NOT NULL, 
+    comments TEXT, 
+    status VARCHAR(10), 
+    PRIMARY KEY (`id`),
 
     user_id INT,
 
     FOREIGN KEY(user_id)
-    REFERENCES  users(id)
+    REFERENCES users(id)
     ON DELETE SET NULL
-);
-
-CREATE TABLE exercises (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    description TEXT NOT NULL,
-    workout_id INT,
-
-
-    FOREIGN KEY(workout_id)
-    REFERENCES workouts(id)
-    ON DELETE SET NULL
-
-);
-
-CREATE TABLE equipment (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    workout_id INT,
-
-    FOREIGN KEY(workout_id)
-    REFERENCES workouts(id)
-    ON DELETE SET NULL
-);
-
-CREATE TABLE bodypart (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    workout_id INT,
-
-    FOREIGN KEY(workout_id)
-    REFERENCES workouts(id)
-    ON DELETE SET NULL
-);
+); 
     
 
 SELECT * FROM ingredients

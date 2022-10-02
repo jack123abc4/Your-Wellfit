@@ -1,4 +1,7 @@
-const { User, Recipe, Workout} = require('../models');
+const router = require('express').Router();
+const sequelize = require('../config/connection');
+const { User, Recipe, Ingredient, Workout} = require('../models');
+
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -20,25 +23,6 @@ router.get('/', async (req, res) => {
     res.render('homepage', { 
       recipes, 
          logged_in: req.session.logged_in
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get('/workout', async (req, res) => {
-  try {
-    // Get all projects and JOIN with user data
-    const workoutData = await Workout.findAll();
-    console.log(workoutData)
-
-    // Serialize data so the template can read it
-    const workouts = workoutData.map((workout) => workout.get({ plain: true }));
-
-    // Pass serialized data and session flag into template
-    res.render('workout', { 
-      workouts, 
-      logged_in: req.session.logged_in 
     });
   } catch (err) {
     res.status(500).json(err);
@@ -68,9 +52,11 @@ router.get('/recipe/:id', async (req, res) => {
         recipe_id: req.params.id
       }
     });
-    const ingredients = ingredientData.map((ingredient) => ingredient.get({ plain: true }));
+    
+    const ingredients = ingredientData.map((ingredient) => 
+      ingredient.get({ plain: true }));
     // console.log(ingredients);
-
+    
     
     res.render('recipe', {
       recipe,
@@ -103,12 +89,16 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    res.redirect('/');
     return;
   }
 
   res.render('login');
 });
+
+router.get('/signup', (req, res) => {
+  res.render('signup')
+})
 
 router.get('/search', (req, res) => {
     if (req.session.logged_in) {
@@ -153,7 +143,7 @@ router.get('/searchResults', async (req, res) => {
   }
 })
 
-  router.get('/recipe', (req, res) => {
+  router.get('/recipe/:id', (req, res) => {
     if (req.session.logged_in) {
       res.redirect('/recipe');
       return;
@@ -162,13 +152,66 @@ router.get('/searchResults', async (req, res) => {
     res.render('recipe');
   });
 
-  router.get('/workout', (req, res) => {
-    if (req.session.logged_in) {
-      res.redirect('/workout');
-      return;
-    }
+  router.get('/workout', async (req, res) => {
+    try {
+      const workoutData = await Workout.findAll();
+      console.log(workoutData)
   
-    res.render('workout');
+      const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+  
+      res.render('workout', { 
+        workouts, 
+        logged_in: req.session.logged_in 
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  router.get('/addworkout', async (req, res) => {
+    try {
+      const workoutData = await Workout.findAll();
+      console.log(workoutData)
+      
+      const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+  
+      res.render('addworkout', { 
+        workouts, 
+        logged_in: req.session.logged_in 
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  router.get('/viewworkout/:id', async (req, res) => {
+    try {
+      const workoutData = await Workout.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            attributes: ['username'],
+          }, 
+          {
+            model: Comment,
+            include: [
+              User
+            ]
+          }
+        ],
+      });
+  
+      const workout = workoutData.get({
+        plain: true
+      });
+  
+      res.render('viewworkout', {
+        ...workout,
+        logged_in: req.session.logged_in
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
 
 module.exports = router;
