@@ -184,14 +184,53 @@ router.get('/searchResults', async (req, res) => {
     }
   });
 
-  router.get('/viewworkout/:id', (req, res) => {
+  // router.get('/viewworkout/:id', (req, res) => {
+  //   if (req.session.logged_in) {
+  //     res.redirect('/viewworkout');
+  //     return;
+  //   }
+  
+  //   res.render('viewworkout');
+  // });
+
+  router.get('/blog/:id', async (req, res) => {
+    try {
+      const blogData = await Blog.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            attributes: ['username'],
+          }, 
+          {
+            model: Comment,
+            include: [
+              User
+            ]
+          }
+        ],
+      });
+  
+      const blog = blogData.get({
+        plain: true
+      });
+  
+      res.render('blog', {
+        ...blog,
+        logged_in: req.session.logged_in
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  router.get('/editworkout/:id', (req, res) => {
     if (req.session.logged_in) {
-      res.redirect('/viewworkout');
+      res.redirect('/editworkout');
       return;
     }
   
-    res.render('viewworkout');
+    res.render('editworkout');
   });
+ 
 
 module.exports = router;
 
