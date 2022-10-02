@@ -4,13 +4,25 @@
 
 body {
   color: white;
+  background-image: url('https://img.freepik.com/free-photo/healthy-life-sport-concept-sneakers-with-apples-towel-bottle-water-wooden-background-copy-space_1220-1474.jpg?w=1800&t=st=1661792367~exp=1661792967~hmac=b4c659e78a3194557b1fc44b536f3d4be08c2f131d4fb75a5000ff868426746f');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 h2, h3, ul {
   color: white;
 }
 
-.container {
-  padding: 2rem 0rem;
+
+.header-container {
+  margin-top: 50px
+}
+
+.serving-size-input {
+  color: black
+}
+
+.recipe-image {
+  border-radius: 25px;
 }
 
 
@@ -23,6 +35,11 @@ h2, h3, ul {
   margin: 2rem
 }
 
+.btn-dark {
+  background-color: black;
+  color: grey
+}
+
 .delimiter {
   padding: 1rem;  
 }
@@ -30,20 +47,57 @@ h2, h3, ul {
 .signup-section {
   padding: 0.3rem 0rem;
 }
+.page-title {
+  margin-top: 100px
+}
+
+.recipe-link {
+  color: #b6c2e2
+}
+
+.recipe-link:hover {
+  color: #0a39bb
+}
+
+.recipe-name {
+  color: rgb(248, 248, 250);
+ background-color: rgb(13, 5, 54);
+ border-radius: 5px;
+}
+
+#recipe-search, #workout-search2 {
+  color: black
+}
+.recipe-search {
+  background-color: rgb(13, 5, 54);
+  padding: 5px
+}
 
 .jumbotron {
   background: none;
   align-items: center;
   color: white;
+  margin-top: 60px
 }
 
 .modal {
   color: black;
 }
 
-#recipe-header {
-  margin-top: 200px
+.ingredient-list, .nutrient-list {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: rgb(13, 5, 54);
 }
+
+.ingredient-list-element {
+  padding: 5px
+}
+
+.ingredient-list-element:hover {
+  cursor: pointer
+}
+
 
 /* body {
   font-family: Arial;

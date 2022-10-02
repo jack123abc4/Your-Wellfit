@@ -1,142 +1,153 @@
-// const LocalStrategy = require('passport-local').Strategy;
-// const bcrypt = require('bcrypt');
+// const LocalStrategy = require('passport-local').Strategy
+// const bcrypt = require('bcryptjs')
 
-// function initialize(passport, getUserByEmail) {
-//     const authenticateUser = async (email, password, done) => { 
-//         const user = getUserByEmail(email);
-//         if (user === null) {
-//             return done(null, false, { message: 'Email not registered!' });
+
+// const { User } = require('../../models');
+
+// module.exports = passport => {
+//   // setup local passport
+//   passport.use(
+//     new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
+//       try {
+
+//         const user = await User.findOne({ email })
+//         if (!user) {
+//           return done(null, false, { message: 'That email is not registered'}) 
 //         }
-//         try {
-//             if (await bcrypt.compare(password, user.password)) {
-//                 return done(null, user)
-//             } else {
-//                 return done(null, false, { message: 'Incorrect email or password'})
-//             }
-//         } catch (error) {
-//             return done(error)
+//         const isMatch = await bcrypt.compare(password, user.password)
+
+//         if (isMatch) {
+//           return done(null, user)
+//         } else {
+//           return done(user.errors, null, { message: 'Email or password incorrect' })
 //         }
-//     }
-//     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser));
-//     passport.serializeUser((user, done) => done(null, user.id));
-//     passport.deserializeUser((id, done) => {
-//         done(null, getUserById(id));
-//     });
-// };
 
-// module.exports = initialize;
-
+//       } catch (e) {
+//         throw e
+//       }
+//     })
+//   )
+//   // passport serializeUser & deserializeUser
+//   passport.serializeUser((user, done) => {
+//     done(null, user.id)
+//   })
+//   passport.deserializeUser((id, done) => {
+//     User.findById(id, (err, user) => {
+//       done(err, user)
+//     })
+//   })
+// }
 
 // //load bcrypt
-var bCrypt = require('bcrypt-nodejs');
+// var bCrypt = require('bcrypt-nodejs');
 
-module.exports = function (passport, user) {
-    var User = user,
-        LocalStrategy = require('passport-local').Strategy;
+// module.exports = function (passport, user) {
+//     var User = user,
+//         LocalStrategy = require('passport-local').Strategy;
 
-    passport.use('local-signup', new LocalStrategy({
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
+//     passport.use('local-signup', new LocalStrategy({
+//             usernameField: 'email',
+//             passwordField: 'password',
+//             passReqToCallback: true // allows us to pass back the entire request to the callback
+//         },
 
-        function (req, email, password, done) {
-            var generateHash = function (password) {
-                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
-            };
+//         function (req, email, password, done) {
+//             var generateHash = function (password) {
+//                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+//             };
 
-            User.findOne({
-                where: {
-                    email: email
-                }
-            }).then(function (user) {
+//             User.findOne({
+//                 where: {
+//                     email: email
+//                 }
+//             }).then(function (user) {
 
-                if (user) {
-                    return done(null, false, {
-                        message: 'That email is already taken'
-                    });
-                } else
+//                 if (user) {
+//                     return done(null, false, {
+//                         message: 'That email is already taken'
+//                     });
+//                 } else
 
-                {
+//                 {
 
-                    var userPassword = generateHash(password),
-                        data = {
-                            email: email,
-                            password: userPassword,
-                            UserName: req.body.UserName
-                        };
+//                     var userPassword = generateHash(password),
+//                         data = {
+//                             email: email,
+//                             password: userPassword,
+//                             UserName: req.body.UserName
+//                         };
 
-                    User.create(data).then(function (newUser, created) {
-                        if (!newUser) {
-                            return done(null, false);
-                        }
+//                     User.create(data).then(function (newUser, created) {
+//                         if (!newUser) {
+//                             return done(null, false);
+//                         }
 
-                        if (newUser) {
-                            return done(null, newUser);
-                        }
-                    });
-                }
-            });
-        }
-    ));
-    //serialize
-    passport.serializeUser(function (user, done) {
-        done(null, user.ID);
-    });
+//                         if (newUser) {
+//                             return done(null, newUser);
+//                         }
+//                     });
+//                 }
+//             });
+//         }
+//     ));
+//     //serialize
+//     passport.serializeUser(function (user, done) {
+//         done(null, user.ID);
+//     });
 
-    // deserialize user 
-    passport.deserializeUser(function (id, done) {
+//     // deserialize user 
+//     passport.deserializeUser(function (id, done) {
 
-        User.findById(id).then(function (user) {
-            if (user) {
-                done(null, user.get());
-            } else {
-                done(user.errors, null);
-            }
-        });
+//         User.findById(id).then(function (user) {
+//             if (user) {
+//                 done(null, user.get());
+//             } else {
+//                 done(user.errors, null);
+//             }
+//         });
 
-    });
-    //LOCAL SIGNIN
-    passport.use('local-signin', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
+//     });
+//     //LOCAL SIGNIN
+//     passport.use('local-signin', new LocalStrategy({
+//             // by default, local strategy uses username and password, we will override with email
+//             usernameField: 'email',
+//             passwordField: 'password',
+//             passReqToCallback: true // allows us to pass back the entire request to the callback
+//         },
 
-        function (req, email, password, done) {
-            var User = user,
-                isValidPassword = function (userpass, password) {
-                    return bCrypt.compareSync(password, userpass);
-                }
+//         function (req, email, password, done) {
+//             var User = user,
+//                 isValidPassword = function (userpass, password) {
+//                     return bCrypt.compareSync(password, userpass);
+//                 }
 
-            User.findOne({
-                where: {
-                    email: email
-                }
-            }).then(function (user) {
+//             User.findOne({
+//                 where: {
+//                     email: email
+//                 }
+//             }).then(function (user) {
 
-                if (!user) {
-                    return done(null, false, {
-                        message: 'Email does not exist'
-                    });
-                }
+//                 if (!user) {
+//                     return done(null, false, {
+//                         message: 'Email does not exist'
+//                     });
+//                 }
 
-                if (!isValidPassword(user.password, password)) {
-                    return done(null, false, {
-                        message: 'Incorrect password.'
-                    });
-                }
+//                 if (!isValidPassword(user.password, password)) {
+//                     return done(null, false, {
+//                         message: 'Incorrect password.'
+//                     });
+//                 }
 
-                var userinfo = user.get();
-                return done(null, userinfo);
+//                 var userinfo = user.get();
+//                 return done(null, userinfo);
 
-            }).catch(function (err) {
-                console.log("Error:", err);
-                return done(null, false, {
-                    message: 'Something went wrong with your Signin'
-                });
-            });
-        }
-    ));
-}
+//             }).catch(function (err) {
+//                 console.log("Error:", err);
+//                 return done(null, false, {
+//                     message: 'Something went wrong with your Signin'
+//                 });
+//             });
+//         }
+//     ));
+// }

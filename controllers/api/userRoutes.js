@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 router.post('/', async (req, res) => {
   try {
@@ -20,16 +21,16 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
   console.log("route access")
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const dbUserData = await User.findOne({ where: { email: req.body.email } });
     console.log('userData', userData);
-    if (!userData) {
+    if (!dbUserData) {
       res
         .status(400)
         .json({ message: 'Incorrect email or password, please try again' });
       return;
     }
 
-    const validPassword = userData.checkPassword(req.body.password);
+    const validPassword = dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
@@ -39,10 +40,10 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = dbUserData.id;
       req.session.logged_in = true;
       
-      res.json({ user: userData, message: 'You are now logged in!' });
+      res.json({ user: dbUserData, message: 'You are now logged in!' });
     });
 
   } catch (err) {

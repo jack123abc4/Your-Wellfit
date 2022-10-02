@@ -54,3 +54,19 @@ const signupFormHandler = async (event) => {
     }
   }
 };
+
+document.getElementById("inputPassword")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("loginBtn").click();
+    }
+});
+
+document.getElementById("signupPassword")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("signupBtn").click();
+    }
+});

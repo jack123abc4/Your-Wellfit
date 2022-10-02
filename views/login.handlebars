@@ -1,4 +1,8 @@
+<div class="container">
+  <div class="header-container">
 <h1>Welcome!</h1>
+</div>
+</div>
 <br>
 
 <div class="container">
@@ -25,9 +29,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" onClick="loginFormHandler()">Login</button>
-              {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
-              {{!-- <a href="/login">New around here? Sign up!</a> --}}
+              <button type="submit" class="btn btn-primary" id="loginBtn" onClick="loginFormHandler()">Login</button>
+              <br>
+              <br>
+              <p>New around here? <button type="submit" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#signupModal">Sign up!</button></p> 
+                      <p>Login or Register with: 
+ 
+        <a href="/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a></p>
             </div>
         </div>
     </div>
@@ -58,8 +66,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" onClick="signupFormHandler()">Sign Up</button>
-              {{!-- <a href="/login">Already have an account? Log in!</a> --}}
+              <button type="submit" class="btn btn-primary" id="signupBtn" onClick="signupFormHandler()">Sign Up</button>
+              <br>
+              <br>
+              <p>Already have an account? <button type="submit" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">Log in!</button></p>
+                      <p>Login or Register with:
+ 
+        <a href="/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a></p>
               {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
             </div>
         </div>

@@ -1,11 +1,15 @@
 
-<h1 id="recipe-header">Nutritional Info:</h1>
+<div class="header-container">
+    <h1>Nutritional Info: </h1>
+</div>
 
+
+<div class="recipe-body">
 <div class="favorites-container text-center">
-  <div class="recipe-name">
-  <h2>{{recipe.name}}</h2>  
-  </div>
-  <img src="{{recipe.image}}" alt="">
+
+  <h2 class="recipe-name">{{recipe.name}}</h2>  
+
+  <img class="recipe-image" src="{{recipe.image}}" alt="">
 
   <br>
   <br>
@@ -17,12 +21,15 @@
 <br>
 <br>
 <div>
-<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="favorites-btn"> <i class="fa-solid fa-heart"></i> Save to Favorites</a>
+<a href="#" class="btn btn-primary btn-md active focus" role="button" aria-pressed="false" state="inactive" id="favorite-btn"> <i class="fa-solid fa-heart"></i> Save to Favorites</a>
+<br>
+<br>
 </div>
 </div>
 
 
-<div class="modal fade" tabindex="-1" id="removeModal" data-keyword="false" data-backdrop="static">
+
+<div class="modal fade" tabindex="-1" id="removeModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,7 +43,7 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="ingredientModal" data-keyword="false" data-backdrop="static">
+<div class="modal fade" tabindex="-1" id="ingredientModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,11 +57,15 @@
     </div>
 </div>
 
-
+<div class="serving-size-row">
+    <p>Serving Size: </p>
+    <input class="serving-size-input" type="number" value="2">
+</div>
+</div>
   <div class="recipe-items">
-    <div class="recipe-row">
-    <h3>Ingredients</h3>
-    <ul>
+    <div class="recipe-row ">
+    <h3 class="text-center">Ingredients</h3>
+    <ul class="ingredient-list">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
       <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
@@ -66,8 +77,8 @@
     </div>
 
     <div class="recipe-row">
-    <h3>Nutrients</h3>
-      <ul>
+    <h3 class="text-center">Nutrients</h3>
+      <ul class="nutrient-list">
         <li>Calories: {{recipe.calories}}</li>
         <li>Calcium: {{recipe.ca}}</li>
         <li>Carbs: {{recipe.chocdf}}</li>
@@ -82,7 +93,9 @@
       </ul>
   </div>
 </div>
+</div>
 
 
 
 <script src="\js\recipe.js"></script>
+<script src="./js/favorites.js"></script>

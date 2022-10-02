@@ -107,8 +107,9 @@ const ingredientClick = async (event) => {
         })
     }
      
-}
-  
+};
+
+
 const listEls = document.querySelectorAll('.ingredient-list-element');
 for (const el of listEls) {
     el.addEventListener('click', ingredientClick);
@@ -147,6 +148,20 @@ const addBtnClick = async (event) => {
     }
 }
 
+const favBtnClick = async (event) => {
+    if (clickMode !== 'fav') {
+        clickMode = 'fav';
+        favBtn.setAttribute("state", "active");
+        favBtn.setAttribute("aria-pressed", "true");
+        addBtn.setAttribute("state", "inactive");
+        addBtn.setAttribute("aria-pressed", "false");
+        replaceBtn.setAttribute("state", "inactive");
+        replaceBtn.setAttribute("aria-pressed", "false");
+        subtractBtn.setAttribute("state", "inactive");
+        subtractBtn.setAttribute("aria-pressed", "false");
+    }
+}
+
 const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
@@ -154,5 +169,38 @@ const addBtn = document.querySelector('#add-btn');
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
+
+var servingInputs = document.querySelector('serving-size-input')
+for (var i = 0; i < servingInputs.length; i++) {
+    var input = servingInputs[i]
+    input.addEventListener('change', servingChanged)
+};
+
+function servingChanged(event) {
+    var input = event.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateServingSize()
+};
+
+function updateServingSize() {
+    var nutritionContainer = document.getElementsByClassName('recipe-items')[0];
+    var recipeRows =  nutritionContainer.getElementsByClassName('recipe-row');
+    var total = 0
+    for (var i = 0; i < recipeRows.length; i++) {
+        var recipeRow = recipeRows[i];
+        var servingSizeEl = recipeRow.getElementsByClassName('serving-size')[0];
+        var sizeInputEl =recipeRow.getElementsByClassName('serving-size-input')[0];
+        // console.log(servingSizeEl, sizeInputEl);
+        var servingSize = parseFloat(servingSizeEl.innerText);
+        var size = sizeInputEl.value;
+        // console.log(servingSize * size);
+        total = total + (servingSize * size)
+    }
+    total = Math.round(total * 100) / 100;
+    document.getElementsByClassName('ingredient-list-element')[0].innerText = total;
+};
+  
 
 populateNutrition();
