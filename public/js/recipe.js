@@ -2,6 +2,7 @@
 let clickMode = 'subtract';
 let globalIngredientObject;
 let globalIngredientElement;
+const replaceModal = document.querySelector("#replace-modal");
 const recipeID = document.querySelector('h2').getAttribute("id");
 const foodID = "ef193ade";
 const foodKey = "472b382be6ee874666d1ada17c97d073";
@@ -167,7 +168,7 @@ const ingredientClick = async (event) => {
         })
         .then(response => response.json());
         console.log("INGR OBJ:", ingredientObject);
-        const replaceModal = document.querySelector("#replace-modal");
+        
         // replaceModal.querySelector("p").innerHTML = ingredientObject.text;
         replaceModal.querySelector("#input-quantity").setAttribute("value",parseFloat(ingredientObject.quantity));
         replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
@@ -178,6 +179,47 @@ const ingredientClick = async (event) => {
     
      
 };
+
+async function createIngredient(ingredientBody) {
+    let i = await fetch(`/api/recipes/ingredient/${recipeID}`, {
+        method: 'POST',
+        body: JSON.stringify(ingredientBody),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json());
+    console.log("CREATED INGREDIENT", i);
+    const fullParseURL = "https://api.edamam.com/api/food-database/v2/parser?app_id="+ foodID + "&app_key=" + foodKey + "&ingr=" + ingredientBody.food + "&nutrition-type=cooking";
+    const food_id = await fetch(fullParseURL, {
+        method: 'GET', //GET is the default.
+        })
+        .then(function (response) {
+            // console.log(response);
+            return response.json();
+        })
+        .then(function (data) {
+            return data.parsed[0].food.foodId;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    i = await fetch(`/api/ingredients/${i.id}`, {
+        method:'PUT',
+        body: JSON.stringify({
+            food_id: food_id,
+            text: `${i.quantity} ${i.measure} ${i.food}`,
+            original: false 
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json());
+    console.log("NEW  INGREDIENT",i);
+    await addIngredients([i]);
+    refreshIngredients();    
+}
+
+async function refreshIngredients() {
+    
+}
 
 
 const listEls = document.querySelectorAll('.ingredient-list-element');
@@ -254,6 +296,19 @@ const replaceModalBtnClick = async(event) => {
     globalIngredientElement.setAttribute("class", 'btn btn-dark btn-lg active');
     // class="btn btn-primary btn-lg active"
     globalIngredientElement.setAttribute("state","inactive");
+    const newIngredientBody = {
+        quantity: replaceModal.querySelector("#input-quantity").value,
+        measure: replaceModal.querySelector("#input-measure").value,
+        food: replaceModal.querySelector("#input-food").value
+    }
+    createIngredient(newIngredientBody);
+    // const newIngredientBody = { "quantity": ingredient.food, "
+    // "ingredients": [{
+    //     "quantity": parseFloat(ingredient.quantity),
+    //     "measureURI": ingredient.measure,
+    //     "foodId": ingredient.food_id
+    // }]
+
     updateNutrients();
 }
 

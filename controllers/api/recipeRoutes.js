@@ -151,6 +151,15 @@ router.get('/image/:id', async (req,res) => {
   return res.status(200).json(await Image.findByPk(imageID));
 })
 
+router.post(`/ingredient/:id`, async (req,res) => {
+  const i = await Ingredient.create({
+    ...req.body,
+    // food_category: req.body.foodCategory,
+    // food_id: req.body.foodId,
+    recipe_id: req.params.id,
+  });
+  res.status(200).json(i.get({plain:true}));
+});
 
 
 router.delete('/:id', withAuth, async (req, res) => {
