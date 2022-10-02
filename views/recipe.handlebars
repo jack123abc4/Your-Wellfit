@@ -15,10 +15,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Info</h4>
+                <h4 class="modal-title">Add An Ingredient</h4>
             </div>
             <div class="modal-body">
-                <p></p>
+                <p>TEXT CONTENT</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="replaceModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Replace An Ingredient</h4>
+            </div>
+            <div class="modal-body">
+                <p>TEXT CONTENT</p>
             </div>
         </div>
     </div>
@@ -27,12 +41,12 @@
 
   <div>
     <h3>Ingredients</h3>
-    <ul>
+    <ul id="ingredient-list">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" data-target="#">{{ingredient.text}}</a></li>
       {{else}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: line-through" state="inactive">{{ingredient.text}}</li>
+      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a href="#" class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" data-target="#">{{ingredient.text}}</a></li>
       {{/if}}
     {{/each}}
 

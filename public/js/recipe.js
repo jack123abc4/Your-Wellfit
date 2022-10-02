@@ -1,6 +1,7 @@
 
 let clickMode = 'subtract';
 const recipeID = document.querySelector('h2').getAttribute("id");
+
 async function populateNutrition() {
     console.log("RECIPE ID",recipeID);
     const foodID = "ef193ade";
@@ -105,7 +106,7 @@ async function updateNutrients() {
 }
 
 const ingredientClick = async (event) => {
-    // console.log(event.target);
+    console.log(event.target.parentElement);
       if (clickMode === 'subtract') {
         const numActive = await fetch(`/api/recipes/activeIngredients/${recipeID}`, {
             method: 'GET'
@@ -115,7 +116,7 @@ const ingredientClick = async (event) => {
             console.log("NUM ACTIVE",data.count);
             return data.count;
         });
-        const ingredientID = event.target.getAttribute("id").split("-")[3];
+        const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
         // console.log("ID:",ingredientID);
         const ingredientState = event.target.getAttribute("state");
         // console.log("State:",ingredientState);
@@ -129,11 +130,16 @@ const ingredientClick = async (event) => {
             });
             // console.log(response.json());
             console.log("RECIPE ID",recipeID);
-            event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+            // event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+            event.target.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
+            // class="btn btn-primary btn-lg active"
             event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
             updateNutrients();
             
         }
+    }
+    else if (clickMode === 'replace') {
+
     }
      
 }
@@ -151,7 +157,12 @@ const subtractBtnClick = async (event) => {
         subtractBtn.setAttribute("aria-pressed", "true");
         replaceBtn.setAttribute("state", "inactive");
         replaceBtn.setAttribute("aria-pressed", "false");
+        const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
+        for (const el of ingredientElements) {
+            el.setAttribute("data-target","#");
+        }
     }
+    
 }
 
 const replaceBtnClick = async (event) => {
@@ -161,6 +172,10 @@ const replaceBtnClick = async (event) => {
         replaceBtn.setAttribute("aria-pressed", "true");
         subtractBtn.setAttribute("state", "inactive");
         subtractBtn.setAttribute("aria-pressed", "false");
+        const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
+        for (const el of ingredientElements) {
+            el.setAttribute("data-target","#replaceModal");
+        }
     }
 }
 
@@ -183,4 +198,10 @@ const addBtn = document.querySelector('#add-btn');
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
 
-populateNutrition();
+function init() {
+    populateNutrition();
+}
+
+init();
+
+

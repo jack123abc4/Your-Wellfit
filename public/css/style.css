@@ -2,12 +2,23 @@
     box-sizing: border-box;
 }
 
+.modal-content, .modal-content h3 {
+  color: black;
+}
+
 body {
   color: white;
 }
+
+ul {
+  list-style-type: none;
+}
+
 h2, h3, ul {
   color: white;
 }
+
+
 
 .container {
   padding: 2rem 0rem;
