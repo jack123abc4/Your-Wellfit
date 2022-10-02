@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const fetch = require ('node-fetch');
 
 const { Ingredient } = require('../../models');
+
+router.get('/:id', async (req, res) => {
+    const ingredient = await Ingredient.findByPk(req.params.id);
+    res.status(200).json(ingredient.get({plain:true}));
+})
 
 router.put('/:id', async (req, res) => {
     // try{

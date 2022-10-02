@@ -26,7 +26,12 @@ Ingredient.init(
       type: DataTypes.STRING,
     },
     image: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
+      // type: DataTypes.INTEGER,
+      // references: {
+      //   model: 'recipe',
+      //   key: 'id',
+      // },
     },
     measure: {
       type: DataTypes.STRING,
