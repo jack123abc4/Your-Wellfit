@@ -1,0 +1,36 @@
+<form class="form log-form">
+  <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="exerciseInput" value="{{workout.exercise}}" placeholder="Exercise" name="exercise">
+      <label for="exerciseInput">Exercise</label>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="setsInput" value="{{workout.sets}}" placeholder="Sets" name="sets">
+      <label for="setsInput">Sets</label>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="repsInput" value="{{workout.reps}}" placeholder="Reps" name="reps">
+      <label for="repsInput">Reps</label>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="weightInput" value="{{workout.weight}}" placeholder="Weight" name="weight">
+      <label for="weightInput">Weight</label>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-floating mb-3">
+      <textarea class="form-control" placeholder="Notes" id="comments" name="comments" style="height: 200px">{{workout.comments}}</textarea>
+      <label for="comments">Notes</label>
+    </div>
+  </div>
+  <div class="col-12 d-grid">
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
+  </form>
+
