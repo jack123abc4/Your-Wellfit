@@ -1,0 +1,51 @@
+<br>
+<br>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/workout">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">View exercise</li>
+  </ol>
+</nav>
+
+<div class="view-exercise p-5">
+  {{#each rows}}
+  <div class="row mb-5">
+    <div class="col text-center">
+      <h3>{{workout.exercise}} {{workout.weight}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Exercise</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Reps</th>
+            <th scope="col">Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{workout.exercise}}</th>
+            <td>{{workout.sets}}</td>
+            <td>{{workout.reps}}</td>
+            <td>{{workout.weight}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b>Notes</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {{workout.comments}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

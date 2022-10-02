@@ -1,103 +1,11 @@
 [
     {
         "exercise": "Dumbbell Tricep Extensions",
-        "bodypart": "Arms",
-        "equipment": "Dumbbell"
-    },
-    {
-        "exercise": "Cable Tricep Pushdown",
-        "bodypart": "Arms",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Hammer Curl",
-        "bodypart": "Arms",
-        "equipment": "Dumbbell"
-    },
-    {
-        "exercise": "Barbell Preacher Curl",
-        "bodypart": "Arms",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Barbell Deadlift",
-        "bodypart": "Back",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Pull Up",
-        "bodypart": "Back",
-        "equipment": "Bodyweight"
-    },
-    {
-        "exercise": "Barbell Row",
-        "bodypart": "Back",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Cable Lat Pulldown",
-        "bodypart": "Back",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Flat Barbell Bench Press",
-        "bodypart": "Chest",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Chest Fly",
-        "bodypart": "Chest",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Incline Dumbbell Bench Press",
-        "bodypart": "Chest",
-        "equipment": "Dumbbell"
-    },
-    {
-        "exercise": "Push Up",
-        "bodypart": "Chest",
-        "equipment": "Bodyweight"
-    },
-    {
-        "exercise": "Barbell Squat",
-        "bodypart": "Legs",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Barbell Lunge",
-        "bodypart": "Legs",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Leg Extension",
-        "bodypart": "Legs",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Calf Raise",
-        "bodypart": "Legs",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Barbell Shoulder Press",
-        "bodypart": "Shoulders",
-        "equipment": "Barbell"
-    },
-    {
-        "exercise": "Dumbbell Shoulder Press",
-        "bodypart": "Shoulders",
-        "equipment": "Dumbbell"
-    },
-    {
-        "exercise": "Face Pull",
-        "bodypart": "Shoulders",
-        "equipment": "Machine"
-    },
-    {
-        "exercise": "Dumbbell Lateral Raise",
-        "bodypart": "Shoulders",
-        "equipment": "Dumbbell"
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
     }
 ]
 

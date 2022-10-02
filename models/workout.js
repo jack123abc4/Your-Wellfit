@@ -8,7 +8,7 @@ Workout.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allownNull: false,
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -16,13 +16,23 @@ Workout.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    bodypart: {
-      type: DataTypes.STRING,
+    sets: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    equipment: {
-      type: DataTypes.STRING,
+    reps: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    weight: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    comments: {
+      type: DataTypes.TEXT,
+    },
+    status: {
+      type: DataTypes.STRING,
     },
     user_id: {
       type: DataTypes.INTEGER,
