@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { QueryTypes } = require('sequelize');
 
-const { User, Recipe, Ingredient } = require('../../models');
+const { User, Recipe, Ingredient, Image } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.put('/updateNutrients/:id', async (req, res) => {
@@ -53,6 +53,11 @@ router.post('/', withAuth, async (req, res) => {
       ...req.body,
       user_id: req.session.user_id,
     });
+    const newImage = await Image.create({
+      recipe_id: newRecipe.id,
+      image_link: req.body.image,
+    });
+    
 
     res.status(200).json(newRecipe);
   } catch (err) {
@@ -83,6 +88,11 @@ router.post('/batch', async (req, res) => {
             ...recipe,
             yield: recipe.yield,
           });
+
+          const currentImage = await Image.create({
+            recipe_id: currentRecipe.id,
+            image_link: recipe.image,
+          }); 
           
           
           //console.log(recipe.name,recipe.calories);
@@ -136,9 +146,12 @@ router.get('/activeIngredients/:id', async (req,res) => {
   `, { type: QueryTypes.SELECT, plain : true }))
 })
 
-router.get('/nutrients/:id'), async (req, res) => {
-  
-}
+router.get('/image/:id', async (req,res) => {
+  const imageID = (await Recipe.findByPk(req.params.id)).image;
+  return res.status(200).json(await Image.findByPk(imageID));
+})
+
+
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
