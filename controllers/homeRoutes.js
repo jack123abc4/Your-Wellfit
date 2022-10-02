@@ -195,4 +195,6 @@ router.get('/searchResults', async (req, res) => {
     res.render('workout');
   });
 
+
+
 module.exports = router;
