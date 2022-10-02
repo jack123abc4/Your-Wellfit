@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { User, Recipe, Ingredient, Workout} = require('../models');
+const { User, Recipe, Ingredient, Workout, Image} = require('../models');
 
 const withAuth = require('../utils/auth');
 
@@ -13,9 +13,13 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Image,
+          attributes: ['image_link'],
+        }
       ],
     });
-
+    
     // Serialize data so the template can read it
     const recipes = recipeData.map((recipe) => recipe.get({ plain: true }));
 
@@ -37,6 +41,10 @@ router.get('/recipe/:id', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Image,
+          attributes: ['image_link'],
+        }
       ],
     });
     const recipe = recipeData.get({ plain: true });
@@ -89,7 +97,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    res.redirect('/');
     return;
   }
 
@@ -110,7 +118,7 @@ router.get('/search', (req, res) => {
   });
 
 router.get('/searchResults', async (req, res) => {
-  try {
+  // try {
     // Get all projects and JOIN with user data
     const currentRecipePks = (await sequelize.query("SELECT (recipe_id) FROM current_recipes"))[0];
     //console.log(currentRecipePks);
@@ -123,8 +131,14 @@ router.get('/searchResults', async (req, res) => {
             model: User,
             attributes: ['name'],
           },
+          {
+            model: Image,
+            attributes: ['image_link'],
+          },
         ],
       });
+      // r.image_link = (await(Image.findByPk(r.image_id))).image_link;
+      // r.image_link = null;
       recipeData.push(r);
     };
 
@@ -132,15 +146,16 @@ router.get('/searchResults', async (req, res) => {
 
     // Serialize data so the template can read it
     const recipes = recipeData.map((recipe) => recipe.get({ plain: true }));
+    console.log("RECIPES", recipes);
 
     // Pass serialized data and session flag into template
     res.render('searchResults', { 
       recipes, 
          logged_in: req.session.logged_in
     });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 })
 
   router.get('/recipe/:id', (req, res) => {
@@ -230,7 +245,11 @@ router.get('/searchResults', async (req, res) => {
   
     res.render('editworkout');
   });
+
  
 
 module.exports = router;
+
+
+
 

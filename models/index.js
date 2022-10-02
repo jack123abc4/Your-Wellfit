@@ -2,6 +2,7 @@ const Recipe = require("./Recipe");
 const Workout = require("./Workout")
 const User = require('./User');
 const Ingredient = require('./Ingredient');
+const Image = require('./Image');
 
 
 
@@ -22,6 +23,15 @@ Recipe.belongsTo(User, {
   Workout.belongsTo(User, {
     foreignKey: 'user_id'
   });
+
+  Recipe.hasOne(Image, {
+    foreignKey: 'recipe_id',
+    onDelete: 'CASCADE'
+  });
+
+  Image.belongsTo(Recipe, {
+    foreignKey: 'recipe_id'
+  })
 
   // workout.hasMany(exercises, {
   //   foreignKey: 'workout_id',
@@ -59,6 +69,6 @@ Ingredient.belongsTo(Recipe, {
   foreignKey: 'recipe_id'
 })
 
-module.exports = { User, Recipe, Ingredient, Workout};
+module.exports = { User, Recipe, Ingredient, Workout, Image};
 
 

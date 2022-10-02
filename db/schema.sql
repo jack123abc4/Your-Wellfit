@@ -11,6 +11,8 @@ CREATE TABLE users (
     password TEXT NOT NULL
 );
 
+
+
 CREATE TABLE recipes (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -26,8 +28,8 @@ CREATE TABLE recipes (
     procnt DECIMAL(30,20) NOT NULL,
     sugar DECIMAL(30,20) NOT NULL,
     yield INT NOT NULL,
-    image TEXT,
-
+    
+    image_id INT,
 
     user_id INT,
 
@@ -45,6 +47,22 @@ CREATE TABLE current_recipes (
     REFERENCES recipes(id)
     ON DELETE SET NULL
 
+);
+
+CREATE TABLE images (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image_link TEXT,
+
+    recipe_id INT,
+    ingredient_id INT,
+
+    FOREIGN KEY(recipe_id)
+    REFERENCES recipes(id)
+    ON DELETE SET NULL
+
+    -- FOREIGN KEY(ingredient_id)
+    -- REFERENCES ingredients(id)
+    -- ON DELETE SET NULL
 );
 
 CREATE TABLE ingredients (

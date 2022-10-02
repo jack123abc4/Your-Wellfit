@@ -120,7 +120,8 @@ async function updateNutrients() {
 }
 
 const ingredientClick = async (event) => {
-    console.log(event.target.parentElement);
+    console.log(event.target.parentElement,clickMode);
+    const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
       if (clickMode === 'subtract') {
         const numActive = await fetch(`/api/recipes/activeIngredients/${recipeID}`, {
             method: 'GET'
@@ -130,7 +131,6 @@ const ingredientClick = async (event) => {
             console.log("NUM ACTIVE",data.count);
             return data.count;
         });
-        const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
         // console.log("ID:",ingredientID);
         const ingredientState = event.target.getAttribute("state");
         // console.log("State:",ingredientState);
@@ -153,7 +153,18 @@ const ingredientClick = async (event) => {
         }
     }
     else if (clickMode === 'replace') {
+        
+        const ingredientObject = await fetch(`/api/ingredients/${ingredientID}`, {
+            method: 'GET'
+        })
+        .then(response => response.json());
+        console.log("INGR OBJ:", ingredientObject);
 
+        const replaceModal = document.querySelector("#replace-modal");
+        // replaceModal.querySelector("p").innerHTML = ingredientObject.text;
+        replaceModal.querySelector("#input-quantity").setAttribute("value",parseFloat(ingredientObject.quantity));
+        replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
+        replaceModal.querySelector("#input-food").setAttribute("value",ingredientObject.food);
     }
     }
     else if (clickMode === 'replace') {
@@ -191,7 +202,7 @@ const replaceBtnClick = async (event) => {
         subtractBtn.setAttribute("aria-pressed", "false");
         const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
         for (const el of ingredientElements) {
-            el.setAttribute("data-target","#replaceModal");
+            el.setAttribute("data-target","#replace-modal");
         }
     }
 }
