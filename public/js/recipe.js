@@ -235,7 +235,7 @@ function init() {
 for (var i = 0; i < servingInputs.length; i++) {
     var input = servingInputs[i]
     input.addEventListener('change', servingChanged)
-};
+}}
 
 function servingChanged(event) {
     var input = event.target
@@ -268,5 +268,3 @@ populateNutrition();
 }
 
 init();
-
-
