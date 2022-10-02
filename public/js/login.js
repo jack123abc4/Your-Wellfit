@@ -25,7 +25,7 @@ const loginFormHandler = async (event) => {
     
     if (response.ok) {
       // If successful, redirect the browser to the profile page
-      document.location.replace('/');
+      document.location.replace('/profile');
     } else {
       alert(response.statusText);
     }
@@ -54,3 +54,19 @@ const signupFormHandler = async (event) => {
     }
   }
 };
+
+document.getElementById("inputPassword")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("loginBtn").click();
+    }
+});
+
+document.getElementById("signupPassword")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("signupBtn").click();
+    }
+});
