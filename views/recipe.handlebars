@@ -1,16 +1,35 @@
-<h1>WellFit Recipes</h1>
 
-<div class="text-center">
-  <h2 class="text-white" id="{{recipe.id}}">{{recipe.name}}</h2>
-  <img src="{{recipe.image}}" alt="">
+<div class="header-container">
+    <h1>Nutritional Info: </h1>
+</div>
+
+
+<div class="recipe-body">
+<div class="favorites-container text-center">
+
+  <h2 class="recipe-name">{{recipe.name}}</h2>  
+
+  <img class="recipe-image" src="{{recipe.image}}" alt="">
+
   <br>
   <br>
-  
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="replace-btn">Replace an Ingredient</a>
-<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
+  <div class="recipe-buttons">
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="replace-btn" data-toggle="modal" data-target="#removeModal">Replace an Ingredient</a>
+<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
 
-<div class="modal fade" tabindex="-1" id="ingredientModal" data-keyword="false" data-backdrop="static">
+<br>
+<br>
+<div>
+<a href="#" class="btn btn-primary btn-md active focus" role="button" aria-pressed="false" state="inactive" id="favorite-btn"> <i class="fa-solid fa-heart"></i> Save to Favorites</a>
+<br>
+<br>
+</div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" id="removeModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,6 +57,19 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" id="ingredientModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
 
   <div>
     <h3>Ingredients</h3>
@@ -49,13 +81,12 @@
       <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a href="#" class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" data-target="#">{{ingredient.text}}</a></li>
       {{/if}}
     {{/each}}
-
     </ul>
-  </div>
-  
-  <div>
-    <h3>Nutrients</h3>
-      <ul id="nutrient-list">
+    </div>
+
+    <div class="recipe-row">
+    <h3 class="text-center">Nutrients</h3>
+      <ul id="nutrient-list" class="nutrient-list">
         <li>Calories: <span id="calories"></span></li>
         <li>Calcium: <span id="ca"></span></li>
         <li>Carbs: <span id="chocdf"></span></li>
@@ -70,5 +101,9 @@
       </ul>
   </div>
 </div>
+</div>
+
+
 
 <script src="\js\recipe.js"></script>
+<script src="./js/favorites.js"></script>
