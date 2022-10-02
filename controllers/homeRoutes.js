@@ -184,34 +184,13 @@ router.get('/searchResults', async (req, res) => {
     }
   });
 
-  router.get('/viewworkout/:id', async (req, res) => {
-    try {
-      const workoutData = await Workout.findByPk(req.params.id, {
-        include: [
-          {
-            model: User,
-            attributes: ['username'],
-          }, 
-          {
-            model: Comment,
-            include: [
-              User
-            ]
-          }
-        ],
-      });
-  
-      const workout = workoutData.get({
-        plain: true
-      });
-  
-      res.render('viewworkout', {
-        ...workout,
-        logged_in: req.session.logged_in
-      });
-    } catch (err) {
-      res.status(500).json(err);
+  router.get('/viewworkout/:id', (req, res) => {
+    if (req.session.logged_in) {
+      res.redirect('/viewworkout');
+      return;
     }
+  
+    res.render('viewworkout');
   });
 
 module.exports = router;
