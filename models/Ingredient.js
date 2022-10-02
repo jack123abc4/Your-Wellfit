@@ -32,14 +32,69 @@ Ingredient.init(
       type: DataTypes.STRING,
     },
     quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(30,20),
     },
     text: {
       type: DataTypes.TEXT,
     },
     weight: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(30,20),
     },
+    calories: {
+      type: DataTypes.DECIMAL(30,20),
+      allowNull: false,
+      defaultValue: 0,
+  },
+  ca: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  chocdf: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  chole: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  fat: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  fe: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  fibtg: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  k: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  na: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  procnt: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
+  sugar: {
+    type: DataTypes.DECIMAL(30,20),
+    allowNull: false,
+    defaultValue: 0,
+  },
     active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

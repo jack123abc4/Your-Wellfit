@@ -1,42 +1,71 @@
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
+<h1>Welcome!</h1>
+<br>
 
-    <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
-      </div>
-      <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
-
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
-      </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
-  </div>
+<div class="container">
+<button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">Login</button>
+<button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+</div>
+<div class="modal fade" tabindex="-1" id="loginModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form login-form" id="loginForm" action="/login" method="POST">
+                  <div class="form-group">
+                    <label for="inputEmail" type="email" >Email: </label>
+                    <input class="form-control" placeholder="Email address" type="text" id="inputEmail" />
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword">Password: </label>
+                    <input class="form-control" placeholder="Password" type="password" id="inputPassword" />
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" onClick="loginFormHandler()">Login</button>
+              {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
+              {{!-- <a href="/login">New around here? Sign up!</a> --}}
+            </div>
+        </div>
+    </div>
 </div>
 
-<script src="./js/login.js"></script>
+
+<div class="modal fade" tabindex="-1" id="signupModal" data-keyword="false" data-backdrop="static">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">              
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sign Up</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form signup-form" action="/signup" method="POST">
+                  <div class="form-group">
+                    <label for="signupUsername">Username: </label>
+                    <input class="form-control" placeholder="Username" type="text" id="signupUsername" />
+                  </div>
+                  <div class="form-group">
+                    <label for="signupEmail">Email: </label>
+                    <input class="form-control" placeholder="Email address" type="text" id="signupEmail" />
+                  </div>
+                  <div class="form-group">
+                    <label for="signupPassword">Password: </label>
+                    <input class="form-control" placeholder="Password" type="password" id="signupPassword" />
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" onClick="signupFormHandler()">Sign Up</button>
+              {{!-- <a href="/login">Already have an account? Log in!</a> --}}
+              {{!-- <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src=".\js\login.js"></script>

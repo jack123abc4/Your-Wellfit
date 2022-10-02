@@ -6,21 +6,20 @@
   <div class="form-group">
     <button class="btn btn-primary" type="submit">Search</button>
   </div>
+  <div class="container">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1>Search Results</h1>
+      </div>
   {{#each recipes as |recipe| }}
-    <div class="row mb-4 project">
-      <div class="col-md-5">
-        <h2>
-          <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-          <a href="/recipe/{{recipe.id}}">{{recipe.name}}</a>
-        </h2>
-        <img src="{{recipe.image}}">
-      </div>
-      <div class="col-md-7">
-        
-      </div>
-    </div>
+  <div class="post">
+    <h3><a href="/recipe/{{recipe.id}}">{{recipe.name}}</a></h3>
+    <p><small>Calories: {{recipe.calories}}</small></p>
+    <p><img src="{{recipe.image}}"></p>
+  </div>
+   
   {{/each}}
 
-</form>
 
 <script src="\js\search.js"></script>

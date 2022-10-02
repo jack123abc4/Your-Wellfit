@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
-
-
+const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
   try {
@@ -22,7 +21,7 @@ router.post('/login', async (req, res) => {
   console.log("route access")
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
-
+    console.log('userData', userData);
     if (!userData) {
       res
         .status(400)
@@ -49,6 +48,23 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+});
+
+
+router.post('/signup', async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    URLSearchParams.push({
+      id: Date.now().toString(),
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    })
+    res.redirect('/login')
+  } catch {
+res.redirect('/signup')
+  }
+  req.body.email
 });
 
 router.post('/logout', (req, res) => {
