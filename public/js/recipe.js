@@ -301,6 +301,16 @@ const addBtnClick = async (event) => {
     }
 }
 
+const saveBtnClick = async (event) => {
+    saveBtn.setAttribute("state", saveBtn.getAttribute("state") === "saved" ? "unsaved" : "saved");
+    saveBtn.innerHTML = saveBtn.getAttribute("state") === "saved" ? "Unsave" : "Save";
+    await fetch(`/api/recipes/save/${recipeID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({active: false})
+    }) 
+}
+
 const favBtnClick = async (event) => {
     if (clickMode !== 'fav') {
         clickMode = 'fav';
@@ -365,16 +375,20 @@ const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
 const favBtn = document.querySelector('#fav-btn');
+const saveBtn = document.querySelector("#save-btn");
 
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
+saveBtn.addEventListener('click', saveBtnClick)
 
 const replaceModalBtn = document.querySelector("#replace-modal-btn");
 replaceModalBtn.addEventListener('click', replaceModalBtnClick)
 
 const addModalBtn = document.querySelector("#add-modal-btn");
 addModalBtn.addEventListener('click', addModalBtnClick)
+
+
 
 function init() {
     populateNutrition();

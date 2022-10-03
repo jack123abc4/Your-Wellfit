@@ -1,6 +1,6 @@
 <div class="container">
     <div class="header-container">
-        <h2>Nutritional Info</h2>
+        <h2></h2>
     </div>
 </div>
 
@@ -73,6 +73,16 @@
         </div>
     </div>
 </div>
+{{#if recipe.favorite}}
+  <div class="container">
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="saved" id="save-btn">Unsave</a>
+  </div>
+{{else}}
+  <div class="container">
+      <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="unsaved" id="save-btn">Save</a>
+    </div>
+  {{/if}}
+
 
   <div>
     <h3>Ingredients</h3>

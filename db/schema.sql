@@ -30,6 +30,7 @@ CREATE TABLE recipes (
     yield INT NOT NULL,
     url TEXT,
     image_id INT,
+    favorite BOOLEAN,
 
     user_id INT,
 

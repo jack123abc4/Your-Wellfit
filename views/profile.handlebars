@@ -5,8 +5,16 @@
   </div>
 </div>
 
+ {{#each savedRecipes as |recipe| }}
+  <div class="post">
+    <h3><a class="recipe-link" href="/recipe/{{recipe.id}}">{{recipe.name}}</a></h3>
+    {{!-- <p><small>Calories: {{recipe.calories}}</small></p> --}}
+    <p><img class="recipe-image" src="{{recipe.image.image_link}}"></p>
+  </div>
+   
+  {{/each}}
 
 
-<script src="./js/profile.js"></script>
-<script src="./js/favorites.js"></script>
+{{!-- <script src="./js/profile.js"></script> --}}
+{{!-- <script src="./js/favorites.js"></script> --}}
 

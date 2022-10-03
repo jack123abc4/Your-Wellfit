@@ -161,6 +161,23 @@ router.post(`/ingredient/:id`, async (req,res) => {
   res.status(200).json(i.get({plain:true}));
 });
 
+router.put(`/save/:id`, async(req,res) => {
+  const recipe = await Recipe.findByPk(req.params.id);
+  if (recipe.get({plain:true}).favorite === true) {
+    Recipe.update(
+      {favorite: false, user_id: req.session.user_id},
+      {where: {id: req.params.id}}
+    )
+  }
+  else {
+    Recipe.update(
+      {favorite: true, user_id: req.session.user_id},
+      {where: {id: req.params.id}}
+    )
+  }
+  res.status(200).json(recipe.get({plain:true}).favorite);
+})
+
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {

@@ -87,6 +87,10 @@ Recipe.init(
     url: {
       type: DataTypes.TEXT,
     },
+    favorite: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
