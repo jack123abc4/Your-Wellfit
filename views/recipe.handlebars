@@ -1,13 +1,13 @@
 <div class="container">
     <div class="header-container">
-        <h2>Nutritional Info</h2>
+        <h2></h2>
     </div>
 </div>
 
 
 
 <div class="text-center">
-  <h2 class="text-white" id="{{recipe.id}}">{{recipe.name}}</h2>
+  <h2 class="text-white recipe-title" id="{{recipe.id}}">{{recipe.name}}</h2>
   <img src="{{recipe.image.image_link}}" alt="">
   <br>
   <br>
@@ -73,15 +73,33 @@
         </div>
     </div>
 </div>
+{{#if recipe.favorite}}
+  <div class="container">
+    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="saved" id="save-btn">Unsave</a>
+  </div>
+{{else}}
+  <div class="container">
+      <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="unsaved" id="save-btn">Save</a>
+    </div>
+  {{/if}}
+  <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false"  id="reset-btn">Reset</a>
+  </div>
 
   <div>
     <h3>Ingredients</h3>
     <ul id="ingredient-list">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{#if ingredient.original}}
+        <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{else}}
+        <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-info btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{/if}}
       {{else}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{#if ingredient.original}}
+          <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{/if}}
+
       {{/if}}
     {{/each}}
     </ul>

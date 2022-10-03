@@ -12,26 +12,26 @@ const seedDatabase = async () => {
   await sequelize.sync();
 
 
-  const users = await User.bulkCreate(userData, {
-    individualHooks: true,
-    returning: true,
-  });
-  console.log("USER DATA: ", userData);
+  // const users = await User.bulkCreate(userData, {
+  //   individualHooks: true,
+  //   returning: true,
+  // });
+  // console.log("USER DATA: ", userData);
   
 
-  for (const recipe of recipeData) {
-    console.log("...recipe",{...recipe});
-    await Recipe.create({
-      ...recipe,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
-    });
-  }
+  // for (const recipe of recipeData) {
+  //   console.log("...recipe",{...recipe});
+  //   await Recipe.create({
+  //     ...recipe,
+  //     user_id: users[Math.floor(Math.random() * users.length)].id,
+  //   });
+  // }
   
   for (const workout of workoutData) {
     console.log("...workout",{...workout});
     await Workout.create({
       ...workout,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
+      // user_id: users[Math.floor(Math.random() * users.length)].id,
     });
   }
   

@@ -4,9 +4,11 @@ let globalIngredientObject;
 let globalIngredientElement;
 const replaceModal = document.querySelector("#replace-modal");
 const addModal = document.querySelector("#add-modal");
-const recipeID = document.querySelector('h2').getAttribute("id");
-const foodID = process.env.API_ID;
-const foodKey = process.env.API_KEY;
+const recipeID = document.querySelector('.recipe-title').getAttribute("id");
+// const foodID = process.env.API_ID;
+// const foodKey = process.env.API_KEY;
+const foodID = "ef193ade"
+const foodKey = "472b382be6ee874666d1ada17c97d073"
 const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
 
 async function populateNutrition() {
@@ -130,8 +132,14 @@ async function updateNutrients() {
 // }
 
 const ingredientClick = async (event) => {
-    console.log(event.target.parentElement,clickMode);
-    const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
+    let eventTargetList = event.target;
+    if (eventTargetList.tagName === "A") {
+        eventTargetList = eventTargetList.parentElement;
+    }
+    const eventTargetAnchor = eventTargetList.querySelector("a");
+
+    console.log(eventTargetList,clickMode);
+    const ingredientID = eventTargetList.getAttribute("id").split("-")[3];
       if (clickMode === 'subtract') {
         const numActive = await fetch(`/api/recipes/activeIngredients/${recipeID}`, {
             method: 'GET'
@@ -142,7 +150,7 @@ const ingredientClick = async (event) => {
             return data.count;
         });
         // console.log("ID:",ingredientID);
-        const ingredientState = event.target.getAttribute("state");
+        const ingredientState = eventTargetAnchor.getAttribute("state");
         // console.log("State:",ingredientState);
         if (numActive > 1 || ingredientState === "inactive") {
             
@@ -154,10 +162,10 @@ const ingredientClick = async (event) => {
             });
             // console.log(response.json());
             console.log("RECIPE ID",recipeID);
-            // event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
-            event.target.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
+            // eventTargetAnchor.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+            eventTargetAnchor.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
             // class="btn btn-primary btn-lg active"
-            event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
+            eventTargetAnchor.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
             updateNutrients();
             
         }
@@ -174,7 +182,7 @@ const ingredientClick = async (event) => {
         replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
         replaceModal.querySelector("#input-food").setAttribute("value",ingredientObject.food);
         globalIngredientObject = ingredientObject;
-        globalIngredientElement = event.target;
+        globalIngredientElement = eventTargetAnchor;
     }
     
      
@@ -226,7 +234,7 @@ async function createIngredientEl(ingredient) {
     newListEl.setAttribute("id",`ingredient-list-element-${ingredient.id}`);
     newListEl.setAttribute("state","active");
 
-    newAnchorEl.setAttribute("class", "btn btn-primary btn-lg active");
+    newAnchorEl.setAttribute("class", "btn btn-info btn-lg active");
     newAnchorEl.setAttribute("role", "button");
     newAnchorEl.setAttribute("aria-pressed", "false");
     newAnchorEl.setAttribute("state", "active");
@@ -239,6 +247,7 @@ async function createIngredientEl(ingredient) {
     newListEl.appendChild(newAnchorEl);
 
     newListEl.addEventListener('click', ingredientClick);
+    updateNutrients();
 
 
     
@@ -259,9 +268,9 @@ const subtractBtnClick = async (event) => {
         replaceBtn.setAttribute("state", "inactive");
         replaceBtn.setAttribute("aria-pressed", "false");
         const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
-        for (const el of ingredientElements) {
-            el.setAttribute("data-target","#");
-        }
+        // for (const el of ingredientElements) {
+        //     el.setAttribute("data-target","#");
+        // }
     }
     
 }
@@ -292,6 +301,19 @@ const addBtnClick = async (event) => {
     }
 }
 
+const saveBtnClick = async (event) => {
+    saveBtn.setAttribute("state", saveBtn.getAttribute("state") === "saved" ? "unsaved" : "saved");
+    saveBtn.innerHTML = saveBtn.getAttribute("state") === "saved" ? "Unsave" : "Save";
+    await fetch(`/api/recipes/save/${recipeID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({active: false})
+    }) 
+}
+
+const resetBtnClick = async (event) => {
+    location.reload();
+}
 const favBtnClick = async (event) => {
     if (clickMode !== 'fav') {
         clickMode = 'fav';
@@ -324,7 +346,7 @@ const replaceModalBtnClick = async(event) => {
         measure: replaceModal.querySelector("#input-measure").value,
         food: replaceModal.querySelector("#input-food").value
     }
-    createIngredient(newIngredientBody);
+    await createIngredient(newIngredientBody);
     // const newIngredientBody = { "quantity": ingredient.food, "
     // "ingredients": [{
     //     "quantity": parseFloat(ingredient.quantity),
@@ -332,7 +354,7 @@ const replaceModalBtnClick = async(event) => {
     //     "foodId": ingredient.food_id
     // }]
 
-    updateNutrients();
+    await updateNutrients();
 }
 
 const addModalBtnClick = async(event) => {
@@ -341,7 +363,7 @@ const addModalBtnClick = async(event) => {
         measure: addModal.querySelector("#input-measure").value,
         food: addModal.querySelector("#input-food").value
     }
-    createIngredient(newIngredientBody);
+    await createIngredient(newIngredientBody);
     // const newIngredientBody = { "quantity": ingredient.food, "
     // "ingredients": [{
     //     "quantity": parseFloat(ingredient.quantity),
@@ -349,23 +371,29 @@ const addModalBtnClick = async(event) => {
     //     "foodId": ingredient.food_id
     // }]
 
-    updateNutrients();
+    await updateNutrients();
 }
 
 const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
 const favBtn = document.querySelector('#fav-btn');
+const saveBtn = document.querySelector("#save-btn");
+const resetBtn = document.querySelector("#reset-btn");
 
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
+saveBtn.addEventListener('click', saveBtnClick);
+resetBtn.addEventListener('click', resetBtnClick);
 
 const replaceModalBtn = document.querySelector("#replace-modal-btn");
 replaceModalBtn.addEventListener('click', replaceModalBtnClick)
 
 const addModalBtn = document.querySelector("#add-modal-btn");
 addModalBtn.addEventListener('click', addModalBtnClick)
+
+
 
 function init() {
     populateNutrition();
@@ -378,6 +406,7 @@ function init() {
     .then(response => response.json())
     .then(function (data) {
         recipeLinkEl.innerHTML = data.short_url;
+        recipeLinkEl.setAttribute("href",data.long_url);
     });
     var servingInputs = document.querySelector('serving-size-input')
     for (var i = 0; i < servingInputs.length; i++) {

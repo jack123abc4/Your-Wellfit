@@ -78,7 +78,7 @@ router.post('/batch', async (req, res) => {
       let recipeID = await sequelize.query(
         `SELECT id FROM recipes
         WHERE
-        name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true }
+        name="${recipe.name}" AND user_id=${req.session.user_id}`, { type: QueryTypes.SELECT, plain : true }
       );
 
         //console.log("RECIPE ID", recipeID);
@@ -87,6 +87,7 @@ router.post('/batch', async (req, res) => {
           const currentRecipe = await Recipe.create({
             ...recipe,
             yield: recipe.yield,
+            user_id: req.session.user_id
           });
 
           const currentImage = await Image.create({
@@ -99,7 +100,7 @@ router.post('/batch', async (req, res) => {
           recipeID = await sequelize.query(
             `SELECT id FROM recipes
             WHERE
-            name="${recipe.name}"`, { type: QueryTypes.SELECT, plain : true}
+            name="${recipe.name}" AND user_id=${req.session.user_id}`, { type: QueryTypes.SELECT, plain : true}
           );
           for (const ingredient of recipe.ingredients) {
             await Ingredient.create({
@@ -160,6 +161,23 @@ router.post(`/ingredient/:id`, async (req,res) => {
   });
   res.status(200).json(i.get({plain:true}));
 });
+
+router.put(`/save/:id`, async(req,res) => {
+  const recipe = await Recipe.findByPk(req.params.id);
+  if (recipe.get({plain:true}).favorite === true) {
+    Recipe.update(
+      {favorite: false, user_id: req.session.user_id},
+      {where: {id: req.params.id}}
+    )
+  }
+  else {
+    Recipe.update(
+      {favorite: true, user_id: req.session.user_id},
+      {where: {id: req.params.id}}
+    )
+  }
+  res.status(200).json(recipe.get({plain:true}).favorite);
+})
 
 
 router.delete('/:id', withAuth, async (req, res) => {
