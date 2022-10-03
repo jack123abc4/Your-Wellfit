@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+
+
 
 router.post('/', async (req, res) => {
   try {
@@ -18,11 +19,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+
 router.post('/login', async (req, res) => {
-  console.log("route access")
-  try {
+  // try {
     const dbUserData = await User.findOne({ where: { email: req.body.email } });
-    console.log('userData', userData);
     if (!dbUserData) {
       res
         .status(400)
@@ -46,10 +47,17 @@ router.post('/login', async (req, res) => {
       res.json({ user: dbUserData, message: 'You are now logged in!' });
     });
 
-  } catch (err) {
-    res.status(400).json(err);
-  }
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
 });
+
+// router.get('/login/federated/google', passport.authenticate('google'));
+
+// router.get('/oauth2/redirect/google', passport.authenticate('google', {
+//   successRedirect: '/',
+//   failureRedirect: '/login'
+// }));
 
 
 router.post('/signup', async (req, res) => {
@@ -78,5 +86,7 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+
 
 module.exports = router;
