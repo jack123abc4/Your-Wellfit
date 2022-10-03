@@ -214,10 +214,30 @@ async function createIngredient(ingredientBody) {
     .then(response => response.json());
     console.log("NEW  INGREDIENT",i);
     await addIngredients([i]);
-    refreshIngredients();    
+    createIngredientEl(i)
+    // updateIngredients();    
 }
 
-async function refreshIngredients() {
+async function createIngredientEl(ingredient) {
+    const newListEl = document.createElement("li");
+    const newAnchorEl = document.createElement("a");
+    newListEl.setAttribute("class","ingredient-list-element");
+    newListEl.setAttribute("id",`ingredient-list-element-${ingredient.id}`);
+    newListEl.setAttribute("state","active");
+    newAnchorEl.setAttribute("href", "#");
+    newAnchorEl.setAttribute("class", "btn btn-primary btn-lg active");
+    newAnchorEl.setAttribute("role", "button");
+    newAnchorEl.setAttribute("aria-pressed", "false");
+    newAnchorEl.setAttribute("state", "inactive");
+    newAnchorEl.setAttribute("id", `ingredient-btn-${ingredient.id}`);
+    newAnchorEl.setAttribute("data-toggle", "modal");
+    newAnchorEl.setAttribute("data-target", "#");
+    newAnchorEl.innerHTML = ingredient.text;
+
+    document.querySelector("#ingredient-list").appendChild(newListEl);
+    newListEl.appendChild(newAnchorEl);
+
+
     
 }
 
