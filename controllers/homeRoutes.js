@@ -109,11 +109,11 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
-router.get('/search', (req, res) => {
-    if (req.session.logged_in) {
-      res.redirect('/search');
-      return;
-    }
+router.get('/search',withAuth, (req, res) => {
+    // if (req.session.logged_in) {
+    //   res.redirect('/search');
+    //   return;
+    // }
   
     res.render('search');
   });
@@ -168,7 +168,7 @@ router.get('/searchResults', async (req, res) => {
     res.render('recipe');
   });
 
-  router.get("/workout", async (req, res) => {
+  router.get("/workout", withAuth, async (req, res) => {
     try {
       const workoutData = await Workout.findAll();
       console.log(workoutData);
