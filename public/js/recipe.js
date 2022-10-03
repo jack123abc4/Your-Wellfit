@@ -5,8 +5,8 @@ let globalIngredientElement;
 const replaceModal = document.querySelector("#replace-modal");
 const addModal = document.querySelector("#add-modal");
 const recipeID = document.querySelector('h2').getAttribute("id");
-const foodID = "ef193ade";
-const foodKey = "472b382be6ee874666d1ada17c97d073";
+const foodID = process.env.API_ID;
+const foodKey = process.env.API_KEY;
 const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
 
 async function populateNutrition() {
