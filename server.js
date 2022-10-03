@@ -49,19 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
-const { auth } = require('express-openid-connect');
-app.use(
-  auth({
-    authRequired: false,
-    auth0Logout: true,
-    issuerBaseURL: process.env.ISSUER_BASE_URL,
-    baseURL: process.env.BASE_URL,
-    clientID: process.env.CLIENT_ID,
-    secret: process.env.SECRET,
-  })
-)
-
-
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
