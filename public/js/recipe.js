@@ -130,8 +130,14 @@ async function updateNutrients() {
 // }
 
 const ingredientClick = async (event) => {
-    console.log(event.target.parentElement,clickMode);
-    const ingredientID = event.target.parentElement.getAttribute("id").split("-")[3];
+    let eventTargetList = event.target;
+    if (eventTargetList.tagName === "A") {
+        eventTargetList = eventTargetList.parentElement;
+    }
+    const eventTargetAnchor = eventTargetList.querySelector("a");
+
+    console.log(eventTargetList,clickMode);
+    const ingredientID = eventTargetList.getAttribute("id").split("-")[3];
       if (clickMode === 'subtract') {
         const numActive = await fetch(`/api/recipes/activeIngredients/${recipeID}`, {
             method: 'GET'
@@ -142,7 +148,7 @@ const ingredientClick = async (event) => {
             return data.count;
         });
         // console.log("ID:",ingredientID);
-        const ingredientState = event.target.getAttribute("state");
+        const ingredientState = eventTargetAnchor.getAttribute("state");
         // console.log("State:",ingredientState);
         if (numActive > 1 || ingredientState === "inactive") {
             
@@ -154,10 +160,10 @@ const ingredientClick = async (event) => {
             });
             // console.log(response.json());
             console.log("RECIPE ID",recipeID);
-            // event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
-            event.target.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
+            // eventTargetAnchor.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+            eventTargetAnchor.setAttribute("class", ingredientState === "active" ? 'btn btn-dark btn-lg active' : 'btn btn-primary btn-lg active');
             // class="btn btn-primary btn-lg active"
-            event.target.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
+            eventTargetAnchor.setAttribute("state", ingredientState === "active" ? "inactive" : "active");
             updateNutrients();
             
         }
@@ -174,7 +180,7 @@ const ingredientClick = async (event) => {
         replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
         replaceModal.querySelector("#input-food").setAttribute("value",ingredientObject.food);
         globalIngredientObject = ingredientObject;
-        globalIngredientElement = event.target;
+        globalIngredientElement = eventTargetAnchor;
     }
     
      
@@ -239,6 +245,7 @@ async function createIngredientEl(ingredient) {
     newListEl.appendChild(newAnchorEl);
 
     newListEl.addEventListener('click', ingredientClick);
+    updateNutrients();
 
 
     
@@ -259,9 +266,9 @@ const subtractBtnClick = async (event) => {
         replaceBtn.setAttribute("state", "inactive");
         replaceBtn.setAttribute("aria-pressed", "false");
         const ingredientElements = document.querySelector("#ingredient-list").querySelectorAll("a");
-        for (const el of ingredientElements) {
-            el.setAttribute("data-target","#");
-        }
+        // for (const el of ingredientElements) {
+        //     el.setAttribute("data-target","#");
+        // }
     }
     
 }
