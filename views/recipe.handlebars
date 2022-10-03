@@ -72,9 +72,16 @@
     <ul id="ingredient-list">
     {{#each ingredients as |ingredient|}}
       {{#if ingredient.active}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{#if ingredient.original}}
+        <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{else}}
+        <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-info btn-lg active" role="button" aria-pressed="false" state="active" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{/if}}
       {{else}}
-      <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{#if ingredient.original}}
+          <li class="ingredient-list-element" id="ingredient-list-element-{{ingredient.id}}" style="text-decoration: none" state="active"><a  class="btn btn-dark btn-lg active" role="button" aria-pressed="false" state="inactive" id="ingredient-btn-{{ingredient.id}}" data-toggle="modal" >{{ingredient.text}}</a></li>
+        {{/if}}
+
       {{/if}}
     {{/each}}
     </ul>

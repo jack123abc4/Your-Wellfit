@@ -232,7 +232,7 @@ async function createIngredientEl(ingredient) {
     newListEl.setAttribute("id",`ingredient-list-element-${ingredient.id}`);
     newListEl.setAttribute("state","active");
 
-    newAnchorEl.setAttribute("class", "btn btn-primary btn-lg active");
+    newAnchorEl.setAttribute("class", "btn btn-info btn-lg active");
     newAnchorEl.setAttribute("role", "button");
     newAnchorEl.setAttribute("aria-pressed", "false");
     newAnchorEl.setAttribute("state", "active");
