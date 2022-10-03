@@ -225,6 +225,7 @@ const favBtnClick = async (event) => {
 const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
+const favBtn = document.querySelector('#fav-btn');
 
 
 subtractBtn.addEventListener('click', subtractBtnClick);
@@ -236,6 +237,8 @@ for (var i = 0; i < servingInputs.length; i++) {
     var input = servingInputs[i]
     input.addEventListener('change', servingChanged)
 }}
+
+init();
 
 function servingChanged(event) {
     var input = event.target
@@ -264,7 +267,4 @@ function updateServingSize() {
 };
   
 
-populateNutrition();
-}
-
-init();
+populateNutrition();}
