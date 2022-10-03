@@ -1,8 +1,9 @@
 const sequelize = require('../config/connection');
 
+const { User, Recipe, Workout } = require('../models');
+
 const workoutData = require('./workoutData.json')
 
-const { User, Recipe, Workout } = require('../models');
 const userData = require('./userData.json');
 
 const recipeData = require('./recipeData.json');
@@ -26,13 +27,13 @@ const seedDatabase = async () => {
     });
   }
   
-  // for (const workout of workoutData) {
-  //   console.log("...workout",{...workout});
-  //   await Workout.create({
-  //     ...workout,
-  //     user_id: users[Math.floor(Math.random() * users.length)].id,
-  //   });
-  // }
+  for (const workout of workoutData) {
+    console.log("...workout",{...workout});
+    await Workout.create({
+      ...workout,
+      user_id: users[Math.floor(Math.random() * users.length)].id,
+    });
+  }
   
   process.exit(0);
 };

@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/workout">Workout</a></li>
     <li class="breadcrumb-item active" aria-current="page">Edit Workout</li>
   </ol>
 </nav>
@@ -12,8 +12,8 @@
   </div>
 {{/if}}
 
-{{#each rows}}
-<form class="row g-3 needs-validation" method="POST" action="/editworkout/{{this.id}}" novalidate> 
+<form class="row g-3 needs-validation" id="workout-{{workout.id}}" method="POST" action="/editworkout/{{workout.id}}" novalidate> 
   {{> workout-form}}
 </form>
-{{/each}}
+
+<script src="./js/editWorkout.js"></script>
