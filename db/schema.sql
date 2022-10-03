@@ -97,14 +97,13 @@ CREATE TABLE ingredients (
 );
 
 CREATE TABLE workouts ( 
-    id INT NOT NULL AUTO_INCREMENT, 
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     exercise VARCHAR(45) NOT NULL, 
     sets INT NOT NULL, 
     reps INT NOT NULL, 
     weight INT NOT NULL, 
     comments TEXT, 
     status VARCHAR(10), 
-    PRIMARY KEY (`id`),
 
     user_id INT,
 

@@ -32,18 +32,19 @@ const logFiller = async (event) => {
     // }
   }
 };
+const a = document.querySelector('a')
+console.log(a.getAttribute('href'))
+// const removeWorkoutItemButtons = document.getElementsByClassName('btn-danger');
+// console.log(removeWorkoutItemButtons);
+// for (var i = 0; i < removeWorkoutItemButtons.length; i++) {
+//     const button = removeWorkoutItemButtons[i];
+//     button.addEventListener('click', removeWorkout)
+// };
 
-const deleteBtn = document.getElementsByClassName('btn-delete');
-console.log(deleteBtn);
-for (var i = 0; i < deleteBtn.length; i++) {
-    const button = deleteBtn[i];
-    button.addEventListener('click', removeWorkout)
-};
-
-function removeWorkout(event) {
-    var buttonClicked = event.target;
-    buttonClicked.parentElement.parentElement.remove();
-};
+// function removeWorkout(event) {
+//     var buttonClicked = event.target;
+//     buttonClicked.parentElement.parentElement.remove();
+// };
 
 const delButtonHandler = async (event) => {
 	if (event.target.hasAttribute('data-id')) {

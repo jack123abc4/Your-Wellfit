@@ -1,8 +1,3 @@
-<br>
-<br>
-<br>
-<br>
-
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/workout">Workout</a></li>
@@ -18,7 +13,7 @@
 {{/if}}
 
 {{#each workouts as |workout|}}
-<form class="row g-3 needs-validation" id="testlog" method="POST" action="/editworkout/{{workout.id}}" novalidate> 
+<form class="row g-3 needs-validation" method="POST" action="/editworkout/{{workout.id}}" novalidate> 
   {{> workout-form}}
 </form>
 {{/each}}

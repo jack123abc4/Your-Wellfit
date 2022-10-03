@@ -203,16 +203,16 @@ router.get("/addworkout", async (req, res) => {
 // router.get("/editworkout/:id", async (req, res) => {
 //   try {
 //     const workoutData = await Workout.findByPk(req.params.id, {
-//       // include: [
-//       //   {
-//       //     model: User,
-//       //     attributes: ["username"],
-//       //   },
-//       //   {
-//       //     model: Workout,
-//       //     include: [User],
-//       //   },
-//       // ],
+//       include: [
+//         {
+//           model: User,
+//           // attributes: ["username"],
+//         },
+//         {
+//           model: Workout,
+//           include: [User],
+//         },
+//       ],
 //     });
 
 //     const workout = workoutData.get({
@@ -228,22 +228,13 @@ router.get("/addworkout", async (req, res) => {
 //   }
 // });
 
-router.get("/editworkout/:id", (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect("/editworkout");
-    return;
-  }
-
-  res.render("editworkout");
-});
-
 // router.get("/viewworkout/:id", async (req, res) => {
 //   try {
 //     const workoutData = await Workout.findByPk(req.params.id, {
 //       include: [
 //         {
 //           model: User,
-//           attributes: ["username"],
+//           // attributes: ["username"],
 //         },
 //         {
 //           model: Workout,
@@ -264,6 +255,15 @@ router.get("/editworkout/:id", (req, res) => {
 //     res.status(500).json(err);
 //   }
 // });
+
+router.get("/editworkout/:id", async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect("/editworkout");
+    return;
+  }
+
+  res.render("editworkout");
+});
 
 router.get("/viewworkout/:id", (req, res) => {
   if (req.session.logged_in) {

@@ -3,28 +3,12 @@
 <br />
 <br />
 
-{{#if removedexercise}}
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    exercise has been removed.
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-{{/if}}
-
 <div class="row">
   <div class="col-6">
     <h1>WellFit Tracker</h1>
   </div>
   <div class="col-6 d-flex justify-content-end">
-    <a
-      href="/addworkout"
-      type="button"
-      class="btn btn-primary align-self-center"
-    >Add Workout</a>
+    <a href="/addworkout" type="button" class="btn btn-primary align-self-center">Add Workout</a>
   </div>
 </div>
 
@@ -41,37 +25,27 @@
   </thead>
   <tbody>
 
-{{!-- {{#if workouts.length}}
- <div class="col-md-6 workout-log"></div> --}}
-      {{#each workouts as |workout|}}
-        <tr>
-          <th scope="row">{{workout.id}}</th>
-          <td>{{workout.exercise}}</td>
-          <td>{{workout.sets}}</td>
-          <td>{{workout.reps}}</td>
-          <td>{{workout.weight}}</td>
-          <td class="text-end">
-            <a
-              href="/viewworkout/{{workout.id}}"
-              type="button"
-              class="btn btn-light btn-small"
-            ><i class="bi bi-eye"></i> View</a>
-            <a
-              href="/editworkout/{{workout.id}}"
-              type="button"
-              class="btn btn-light btn-small"
-            ><i class="bi bi-pencil"></i>
-              Edit</a>
-            <a
-              {{!-- href="/{{workout.id}}" --}}
-              type="button"
-              class="btn btn-light btn-small btn-delete"
-            ><i class="bi bi-person-x"></i> Delete</a>
-          </td>
-        </tr>
-      {{/each}}
-      {{!-- </div>
-  {{/if}} --}}
+    {{#if workouts.length}}
+    <div class="col-md-6 workout-log"></div>
+
+    {{#each workouts as |workout|}}
+    <tr>
+      <th scope="row">{{workout.id}}</th>
+      <td>{{workout.exercise}}</td>
+      <td>{{workout.sets}}</td>
+      <td>{{workout.reps}}</td>
+      <td>{{workout.weight}}</td>
+      <td class="text-end">
+        <a href="/viewworkout/{{workout.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i>
+          View</a>
+        <a href="/editworkout/{{workout.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-pencil"></i>
+          Edit</a>
+        <button class="btn btn-danger btn-small" data-id="{{workout.id}}">DELETE</button>
+      </td>
+    </tr>
+    {{/each}}
+    </div>
+    {{/if}}
 
   </tbody>
 </table>
