@@ -53,6 +53,7 @@ const searchFormHandler = async (event) => {
               sugar: totalNutrients.SUGAR.quantity,
               yield: result.recipe.yield,
               image: result.recipe.image,
+              url: result.recipe.url,
               user_id: 1,
               ingredientLines: result.recipe.ingredientLines,
               ingredients: result.recipe.ingredients

@@ -163,7 +163,6 @@ const ingredientClick = async (event) => {
         }
     }
     else if (clickMode === 'replace') {
-        
         const ingredientObject = await fetch(`/api/ingredients/${ingredientID}`, {
             method: 'GET'
         })
@@ -369,11 +368,22 @@ const addModalBtn = document.querySelector("#add-modal-btn");
 addModalBtn.addEventListener('click', addModalBtnClick)
 
 function init() {
+    populateNutrition();
+    const recipeLinkEl = document.querySelector("#recipe-link");
+    const recipeURL = fetch(`/api/urls/shorten/${recipeID}`, {
+        method: 'POST',
+        body: JSON.stringify({url:"url"}),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(function (data) {
+        recipeLinkEl.innerHTML = data.short_url;
+    });
     var servingInputs = document.querySelector('serving-size-input')
-for (var i = 0; i < servingInputs.length; i++) {
-    var input = servingInputs[i]
-    input.addEventListener('change', servingChanged)
-}}
+    for (var i = 0; i < servingInputs.length; i++) {
+        var input = servingInputs[i]
+        input.addEventListener('change', servingChanged)
+    }}
 
 init();
 
@@ -404,5 +414,5 @@ function updateServingSize() {
 };
   
 
-populateNutrition();
+
 

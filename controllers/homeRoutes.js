@@ -48,6 +48,7 @@ router.get('/recipe/:id', async (req, res) => {
       ],
     });
     const recipe = recipeData.get({ plain: true });
+    
 
     // let ingredientData = (await sequelize.query(
     //   `SELECT text FROM ingredients
@@ -95,7 +96,7 @@ router.get('/profile', withAuth, async (req, res) => {
   }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', (req, res, next) => {
   if (req.session.logged_in) {
     res.redirect('/');
     return;
