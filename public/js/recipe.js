@@ -1,12 +1,17 @@
 
 let clickMode = 'subtract';
+let globalIngredientObject;
+let globalIngredientElement;
+const replaceModal = document.querySelector("#replace-modal");
+const addModal = document.querySelector("#add-modal");
 const recipeID = document.querySelector('h2').getAttribute("id");
+const foodID = "ef193ade";
+const foodKey = "472b382be6ee874666d1ada17c97d073";
+const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
 
 async function populateNutrition() {
     console.log("RECIPE ID",recipeID);
-    const foodID = "ef193ade";
-    const foodKey = "472b382be6ee874666d1ada17c97d073";
-    const foodURL = "https://api.edamam.com/api/food-database/v2/nutrients?app_id=" + foodID + "&app_key=" + foodKey;
+   
 
     const ingredientData = await fetch(`/api/recipes/ingredients/${recipeID}`, {
     method: 'GET'
@@ -14,9 +19,13 @@ async function populateNutrition() {
     .then((response) => response.json())
     .then(function (data) {
     console.log("RETURN FROM API",data);
-    return data;
+    addIngredients(data);
     });
     
+    
+}
+
+async function addIngredients(ingredientData) {
     const ingredientObjects = [];
     for (const ingredient of ingredientData) {
         console.log("INGREDIENT ", ingredient);
@@ -82,6 +91,7 @@ async function populateNutrition() {
         });
     }
     updateNutrients();
+}
     
 async function updateNutrients() {
     nutritionList = document.querySelector("#nutrient-list");
@@ -101,23 +111,23 @@ async function updateNutrients() {
     
 }
 
-async function updateNutrients() {
-    nutritionList = document.querySelector("#nutrient-list");
-    nutritionListSpans = nutritionList.querySelectorAll("span");
-    const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(function (data) {
-        console.log(data);
-        for (const l of nutritionListSpans) {
-            l.textContent = Math.round(data[l.getAttribute("id")]);
-        }
-    })
+// async function updateNutrients() {
+//     nutritionList = document.querySelector("#nutrient-list");
+//     nutritionListSpans = nutritionList.querySelectorAll("span");
+//     const newNutrients = await fetch(`/api/recipes/updateNutrients/${recipeID}`, {
+//         method: 'PUT',
+//         headers: { 'Content-Type': 'application/json' }
+//     })
+//     .then(response => response.json())
+//     .then(function (data) {
+//         console.log(data);
+//         for (const l of nutritionListSpans) {
+//             l.textContent = Math.round(data[l.getAttribute("id")]);
+//         }
+//     })
     
     
-}
+// }
 
 const ingredientClick = async (event) => {
     console.log(event.target.parentElement,clickMode);
@@ -159,17 +169,81 @@ const ingredientClick = async (event) => {
         })
         .then(response => response.json());
         console.log("INGR OBJ:", ingredientObject);
-
-        const replaceModal = document.querySelector("#replace-modal");
+        
         // replaceModal.querySelector("p").innerHTML = ingredientObject.text;
         replaceModal.querySelector("#input-quantity").setAttribute("value",parseFloat(ingredientObject.quantity));
         replaceModal.querySelector("#input-measure").setAttribute("value",ingredientObject.measure);
         replaceModal.querySelector("#input-food").setAttribute("value",ingredientObject.food);
+        globalIngredientObject = ingredientObject;
+        globalIngredientElement = event.target;
     }
-    }
-    else if (clickMode === 'replace') {
+    
      
 };
+
+async function createIngredient(ingredientBody) {
+    let i = await fetch(`/api/recipes/ingredient/${recipeID}`, {
+        method: 'POST',
+        body: JSON.stringify(ingredientBody),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json());
+    console.log("CREATED INGREDIENT", i);
+    const fullParseURL = "https://api.edamam.com/api/food-database/v2/parser?app_id="+ foodID + "&app_key=" + foodKey + "&ingr=" + ingredientBody.food + "&nutrition-type=cooking";
+    const food_id = await fetch(fullParseURL, {
+        method: 'GET', //GET is the default.
+        })
+        .then(function (response) {
+            // console.log(response);
+            return response.json();
+        })
+        .then(function (data) {
+            return data.parsed[0].food.foodId;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    i = await fetch(`/api/ingredients/${i.id}`, {
+        method:'PUT',
+        body: JSON.stringify({
+            food_id: food_id,
+            text: `${i.quantity} ${i.measure} ${i.food}`,
+            original: false 
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json());
+    console.log("NEW  INGREDIENT",i);
+    await addIngredients([i]);
+    await createIngredientEl(i)
+    updateNutrients();
+    // updateIngredients();    
+}
+
+async function createIngredientEl(ingredient) {
+    const newListEl = document.createElement("li");
+    const newAnchorEl = document.createElement("a");
+    newListEl.setAttribute("class","ingredient-list-element");
+    newListEl.setAttribute("id",`ingredient-list-element-${ingredient.id}`);
+    newListEl.setAttribute("state","active");
+
+    newAnchorEl.setAttribute("class", "btn btn-primary btn-lg active");
+    newAnchorEl.setAttribute("role", "button");
+    newAnchorEl.setAttribute("aria-pressed", "false");
+    newAnchorEl.setAttribute("state", "active");
+    newAnchorEl.setAttribute("id", `ingredient-btn-${ingredient.id}`);
+    newAnchorEl.setAttribute("data-toggle", "modal");
+    
+    newAnchorEl.innerHTML = ingredient.text;
+
+    document.querySelector("#ingredient-list").appendChild(newListEl);
+    newListEl.appendChild(newAnchorEl);
+
+    newListEl.addEventListener('click', ingredientClick);
+
+
+    
+}
 
 
 const listEls = document.querySelectorAll('.ingredient-list-element');
@@ -233,6 +307,52 @@ const favBtnClick = async (event) => {
     }
 }
 
+const replaceModalBtnClick = async(event) => {
+    const response = await fetch(`/api/ingredients/${globalIngredientObject.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({active: false})
+        
+    });
+    // console.log(response.json());
+    console.log("RECIPE ID",recipeID);
+    // event.target.setAttribute("style", ingredientState === "active" ? 'text-decoration: line-through' : 'text-decoration: none');
+    globalIngredientElement.setAttribute("class", 'btn btn-dark btn-lg active');
+    // class="btn btn-primary btn-lg active"
+    globalIngredientElement.setAttribute("state","inactive");
+    const newIngredientBody = {
+        quantity: replaceModal.querySelector("#input-quantity").value,
+        measure: replaceModal.querySelector("#input-measure").value,
+        food: replaceModal.querySelector("#input-food").value
+    }
+    createIngredient(newIngredientBody);
+    // const newIngredientBody = { "quantity": ingredient.food, "
+    // "ingredients": [{
+    //     "quantity": parseFloat(ingredient.quantity),
+    //     "measureURI": ingredient.measure,
+    //     "foodId": ingredient.food_id
+    // }]
+
+    updateNutrients();
+}
+
+const addModalBtnClick = async(event) => {
+    const newIngredientBody = {
+        quantity: addModal.querySelector("#input-quantity").value,
+        measure: addModal.querySelector("#input-measure").value,
+        food: addModal.querySelector("#input-food").value
+    }
+    createIngredient(newIngredientBody);
+    // const newIngredientBody = { "quantity": ingredient.food, "
+    // "ingredients": [{
+    //     "quantity": parseFloat(ingredient.quantity),
+    //     "measureURI": ingredient.measure,
+    //     "foodId": ingredient.food_id
+    // }]
+
+    updateNutrients();
+}
+
 const subtractBtn = document.querySelector('#subtract-btn');
 const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
@@ -240,6 +360,12 @@ const addBtn = document.querySelector('#add-btn');
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
+
+const replaceModalBtn = document.querySelector("#replace-modal-btn");
+replaceModalBtn.addEventListener('click', replaceModalBtnClick)
+
+const addModalBtn = document.querySelector("#add-modal-btn");
+addModalBtn.addEventListener('click', addModalBtnClick)
 
 function init() {
     var servingInputs = document.querySelector('serving-size-input')
@@ -276,6 +402,6 @@ function updateServingSize() {
   
 
 populateNutrition();
-}
+
 
 init();
