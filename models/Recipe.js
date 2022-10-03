@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
+const Image = require('../models/Image.js')
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
@@ -80,8 +81,8 @@ Recipe.init(
       allowNull: false,
       defaultValue: 0,
     },
-    image: {
-      type: DataTypes.TEXT,
+    image_id: {
+      type: DataTypes.INTEGER,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -92,6 +93,14 @@ Recipe.init(
     },
   },
   {
+    // hooks: {
+    //   afterCreate: async (newRecipeData) => {
+    //     console.log("NEW RECIPE DATA", newRecipeData)
+    //     const imageObject = await Image.create({image_link:newRecipeData.image, recipe_id : newRecipeData.id})
+    //     newRecipeData.image_id = await imageObject.id;
+    //     return newRecipeData;
+    //   },
+    // },
     sequelize,
     timestamps: false,
     // freezeTableName: true,

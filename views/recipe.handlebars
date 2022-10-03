@@ -1,35 +1,15 @@
 
-<div class="header-container">
-    <h1>Nutritional Info: </h1>
-</div>
-
-
-<div class="recipe-body">
-<div class="favorites-container text-center">
-
-  <h2 class="recipe-name">{{recipe.name}}</h2>  
-
-  <img class="recipe-image" src="{{recipe.image}}" alt="">
-
+<div class="text-center">
+  <h2 class="text-white" id="{{recipe.id}}">{{recipe.name}}</h2>
+  <img src="{{recipe.image.image_link}}" alt="">
   <br>
   <br>
-  <div class="recipe-buttons">
-<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
-<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="replace-btn" data-toggle="modal" data-target="#removeModal">Replace an Ingredient</a>
-<a href="#" class="btn btn-primary btn-md active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredientModal">Add your Own Ingredient</a>
+  
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" state="active" id="subtract-btn">Subtract an Ingredient</a>
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="replace-btn">Replace an Ingredient</a>
+<a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false" state="inactive" id="add-btn" data-toggle="modal" data-target="#ingredient-modal">Add your Own Ingredient</a>
 
-<br>
-<br>
-<div>
-<a href="#" class="btn btn-primary btn-md active focus" role="button" aria-pressed="false" state="inactive" id="favorite-btn"> <i class="fa-solid fa-heart"></i> Save to Favorites</a>
-<br>
-<br>
-</div>
-</div>
-
-
-
-<div class="modal fade" tabindex="-1" id="removeModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
+<div class="modal fade" tabindex="-1" id="remove-modal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -43,29 +23,30 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="replaceModal" data-keyword="false" data-backdrop="static">
+<div class="modal fade" tabindex="-1" id="replace-modal" data-keyword="false" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Replace An Ingredient</h4>
             </div>
-            <div class="modal-body">
-                <p>TEXT CONTENT</p>
-            </div>
-        </div>
-    </div>
-</div>
+            <div class="modal-body" id="replace-modal-body">
+                <div class="d-inline-flex p-2">
+                  <form>
+                    <label for="input-quantity">Quantity:</label>
+                    <input type="decimal" id="input-quantity" name="quantity">
+                  </form>
+                  <form>
+                    <label for="input-measure">Measure:</label>
+                    <input type="" id="input-measure" name="measure">
+                  </form>
+                  <form>
+                    <label for="input-food">Food:</label>
+                    <input type="" id="input-food" name="food">
+                  </form>
+                  <button class="btn btn-primary" data-dismiss="modal" type="submit" id="replace-modal-btn">Replace</button>
 
-<div class="modal fade" tabindex="-1" id="ingredientModal" data-bs-backdrop="true" data-keyword="false" data-backdrop="static">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Info</h4>
-            </div>
-            <div class="modal-body">
-                <p></p>
+                </div>
             </div>
         </div>
     </div>
