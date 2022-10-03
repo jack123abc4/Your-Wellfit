@@ -262,16 +262,20 @@ router.get('/searchResults', async (req, res) => {
       return;
     }
    
-    res.render("editworkout");
+    let workout = await Workout.findByPk(req.params.id)
+    workout = await workout.get({plain:true})
+    res.render("editworkout",{workout});
   });
+  
+  router.get("/viewworkout/:id", async (req, res) => {
+    // if (req.session.logged_in) {
+    //   res.redirect("/viewworkout");
+    //   return;
+    // }
    
-  router.get("/viewworkout/:id", (req, res) => {
-    if (req.session.logged_in) {
-      res.redirect("/viewworkout");
-      return;
-    }
-   
-    res.render("viewworkout");
+    let workout = await Workout.findByPk(req.params.id)
+    workout = await workout.get({plain:true})
+    res.render("viewworkout",{workout});
   });
   
 

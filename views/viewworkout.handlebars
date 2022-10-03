@@ -8,14 +8,11 @@
 
     <li class="breadcrumb-item"><a href="/workout">Workout</a></li>
 
-    <li class="breadcrumb-item header-container"><a href="/workout">Home</a></li>
-
     <li class="breadcrumb-item active" aria-current="page">View exercise</li>
   </ol>
 </nav>
 
 <div class="view-exercise p-5">
-  {{#each workouts as |workout|}}
   <div class="row mb-5">
     <div class="col text-center">
       <h3>{{workout.exercise}} {{workout.weight}}</h3>
@@ -53,7 +50,6 @@
       </div>
     </div>
   </div>
-  {{/each}}
 </div>
 
 {{!-- <script src="./js/workout.js"></script> --}}
