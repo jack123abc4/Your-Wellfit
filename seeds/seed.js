@@ -26,13 +26,13 @@ const seedDatabase = async () => {
     });
   }
   
-  for (const workout of workoutData) {
-    console.log("...workout",{...workout});
-    await Workout.create({
-      ...workout,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
-    });
-  }
+  // for (const workout of workoutData) {
+  //   console.log("...workout",{...workout});
+  //   await Workout.create({
+  //     ...workout,
+  //     user_id: users[Math.floor(Math.random() * users.length)].id,
+  //   });
+  // }
   
   process.exit(0);
 };
