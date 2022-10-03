@@ -5,7 +5,7 @@ for (var i = 0; i < removeFavoriteItemButtons.length; i++) {
     button.addEventListener('click', removeFavorite)
 };
 
-function  removeFavorite(event) {
+function removeFavorite(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove();
 };
