@@ -406,6 +406,7 @@ function init() {
     .then(response => response.json())
     .then(function (data) {
         recipeLinkEl.innerHTML = data.short_url;
+        recipeLinkEl.setAttribute("href",data.long_url);
     });
     var servingInputs = document.querySelector('serving-size-input')
     for (var i = 0; i < servingInputs.length; i++) {
