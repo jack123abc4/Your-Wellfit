@@ -30,7 +30,9 @@
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "shortid": "^2.2.16",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "eslint": "^7.12.1",

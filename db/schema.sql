@@ -28,7 +28,7 @@ CREATE TABLE recipes (
     procnt DECIMAL(30,20) NOT NULL,
     sugar DECIMAL(30,20) NOT NULL,
     yield INT NOT NULL,
-    
+    url TEXT,
     image_id INT,
 
     user_id INT,
@@ -63,6 +63,13 @@ CREATE TABLE images (
     -- FOREIGN KEY(ingredient_id)
     -- REFERENCES ingredients(id)
     -- ON DELETE SET NULL
+);
+
+CREATE TABLE urls (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    url_code TEXT,
+    long_url TEXT,
+    short_url TEXT
 );
 
 CREATE TABLE ingredients (
