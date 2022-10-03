@@ -7,8 +7,8 @@
 
 
 const loginFormHandler = async (event) => {
-  //event.preventDefault();
-  //console.log("hello")
+  // event.preventDefault();
+  console.log("hello")
   // Collect values from the login form
   const email = document.querySelector('#inputEmail').value;
   const password = document.querySelector('#inputPassword').value;
@@ -19,15 +19,16 @@ const loginFormHandler = async (event) => {
     // Send a POST request to the API endpoint
     const response = await fetch('/api/users/login', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email: email, password: password }),
       headers: { 'Content-Type': 'application/json' },
     });
     
     if (response.ok) {
+      console.log('Login successful!')
       // If successful, redirect the browser to the profile page
       document.location.replace('/profile');
     } else {
-      alert(response.statusText);
+      console.log(await response.json())
     }
   }
 };
@@ -48,9 +49,10 @@ const signupFormHandler = async (event) => {
     });
 
     if (response.ok) {
+      alert('Sign up successful!')
       document.location.replace('/');
     } else {
-      alert(response.statusText);
+      alert('Failed to sign up');
     }
   }
 };
@@ -63,6 +65,7 @@ document.getElementById("inputPassword")
     }
 });
 
+
 document.getElementById("signupPassword")
     .addEventListener("keyup", function(event) {
     event.preventDefault();
@@ -70,3 +73,4 @@ document.getElementById("signupPassword")
         document.getElementById("signupBtn").click();
     }
 });
+

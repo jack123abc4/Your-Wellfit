@@ -3,6 +3,7 @@ const Workout = require("./Workout")
 const User = require('./User');
 const Ingredient = require('./Ingredient');
 const Image = require('./Image');
+const Url = require('./Url')
 
 
 
@@ -69,6 +70,6 @@ Ingredient.belongsTo(Recipe, {
   foreignKey: 'recipe_id'
 })
 
-module.exports = { User, Recipe, Ingredient, Workout, Image};
+module.exports = { User, Recipe, Ingredient, Workout, Image, Url};
 
 
