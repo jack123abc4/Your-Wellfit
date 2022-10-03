@@ -19,13 +19,13 @@ const seedDatabase = async () => {
   console.log("USER DATA: ", userData);
   
 
-  for (const recipe of recipeData) {
-    console.log("...recipe",{...recipe});
-    await Recipe.create({
-      ...recipe,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
-    });
-  }
+  // for (const recipe of recipeData) {
+  //   console.log("...recipe",{...recipe});
+  //   await Recipe.create({
+  //     ...recipe,
+  //     user_id: users[Math.floor(Math.random() * users.length)].id,
+  //   });
+  // }
   
   for (const workout of workoutData) {
     console.log("...workout",{...workout});
