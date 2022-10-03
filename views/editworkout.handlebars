@@ -17,10 +17,10 @@
   </div>
 {{/if}}
 
-{{#each rows}}
-<form class="row g-3 needs-validation" id="testlog" method="POST" action="/editworkout/{{this.id}}" novalidate> 
+{{#each workouts as |workout|}}
+<form class="row g-3 needs-validation" id="testlog" method="POST" action="/editworkout/{{workout.id}}" novalidate> 
   {{> workout-form}}
 </form>
 {{/each}}
 
-<script src="./js/workoutSearch.js"></script>
+<script src="./js/workout.js"></script>

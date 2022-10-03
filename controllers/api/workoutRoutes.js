@@ -11,20 +11,20 @@ router.get('/', (req,res) => {
   });
 });
 
-// router.get('/:id', (req, res) => {
-//   Workout.findAll({
-//           where: {
-//               id: req.params.id
-//           }
-//       })
-//       .then(workoutData => res.json(workoutData))
-//       .catch(err => {
-//           console.log(err);
-//           res.status(500).json(err);
-//       })
-// });
+router.get('/:id', (req, res) => {
+  Workout.findAll({
+          where: {
+              id: req.params.id
+          }
+      })
+      .then(workoutData => res.json(workoutData))
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      })
+});
 
-// router.post('/', withAuth, async (req, res) => {
+// router.post('/', async (req, res) => {
 //   try {
 //     const newWorkout = await Workout.create({
 //       ...req.body,
@@ -51,8 +51,8 @@ router.post('/add', async (req, res) => {
   }
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
-  try {
+router.delete('/:id', async (req, res) => {
+  // try {
     const workoutData = await Workout.destroy({
       where: {
         id: req.params.id,
@@ -66,9 +66,9 @@ router.delete('/:id', withAuth, async (req, res) => {
     }
 
     res.status(200).json(workoutData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 });
 
 module.exports = router;

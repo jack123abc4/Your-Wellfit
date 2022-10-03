@@ -2,7 +2,6 @@
 <br>
 <br>
 <br>
-<br>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -12,7 +11,7 @@
 </nav>
 
 <div class="view-exercise p-5">
-  {{#each rows}}
+  {{#each workouts as |workout|}}
   <div class="row mb-5">
     <div class="col text-center">
       <h3>{{workout.exercise}} {{workout.weight}}</h3>
@@ -53,4 +52,5 @@
   {{/each}}
 </div>
 
-<script src="./js/workoutSearch.js"></script>
+{{!-- <script src="./js/workout.js"></script> --}}
+

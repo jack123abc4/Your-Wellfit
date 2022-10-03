@@ -25,14 +25,46 @@ const logFiller = async (event) => {
         console.log(data);
       });
 
-    if (response.ok) {
+    // if (response.ok) {
     document.location.replace("/workout");
-    } else {
-      alert('Failed to create workout');
-    }
+    // } else {
+    //   alert('Failed to create workout');
+    // }
   }
+};
+
+const deleteBtn = document.getElementsByClassName('btn-delete');
+console.log(deleteBtn);
+for (var i = 0; i < deleteBtn.length; i++) {
+    const button = deleteBtn[i];
+    button.addEventListener('click', removeWorkout)
+};
+
+function removeWorkout(event) {
+    var buttonClicked = event.target;
+    buttonClicked.parentElement.parentElement.remove();
+};
+
+const delButtonHandler = async (event) => {
+	if (event.target.hasAttribute('data-id')) {
+		const id = event.target.getAttribute('data-id');
+
+		const response = await fetch(`/api/workouts/${id}`, {
+			method: 'DELETE',
+		});
+
+		// if (response.ok) {
+		// 	document.location.replace('/workouts');
+		// } else {
+		// 	alert('Failed to delete workout');
+		// }
+	}
 };
 
 const logButton = document.querySelector("#testlog");
 console.log(logButton);
 logButton.addEventListener("submit", logFiller);
+
+document
+	.querySelector('.workout-log')
+	.addEventListener('click', delButtonHandler);
