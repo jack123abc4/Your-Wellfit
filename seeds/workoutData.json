@@ -1,6 +1,46 @@
 [
     {
-        "exercise": "Dumbbell Tricep Extensions",
+        "exercise": "Barbell Bench Press ",
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
+    },
+    {
+        "exercise": "Barbell Row",
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
+    },
+    {
+        "exercise": "Barbell Sqaut",
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
+    },
+    {
+        "exercise": "Dumbbell Shoulder Press",
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
+    },
+    {
+        "exercise": "Dumbbell Curl",
+        "sets": 3,
+        "reps": 10,
+        "weight": 0,
+        "comment": "",
+        "status": "active"
+    },
+    {
+        "exercise": "Dumbbell Tricep Extension",
         "sets": 3,
         "reps": 10,
         "weight": 0,
