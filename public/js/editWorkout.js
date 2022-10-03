@@ -13,7 +13,7 @@ const logFiller = async (event) => {
     const body = JSON.stringify({ exercise, sets, reps, weight, comments });
     console.log(body);
 
-    const response = await fetch(`/api/workouts/add`, {
+    const response = await fetch(`/api/workouts/edit`, {
       method: "POST",
       body: JSON.stringify({ exercise, sets, reps, weight, comments }),
       headers: {
@@ -25,14 +25,28 @@ const logFiller = async (event) => {
         console.log(data);
       });
 
-    if (response.ok) {
+    // if (response.ok) {
     document.location.replace("/workout");
-    } else {
-      alert('Failed to create workout');
-    }
+    // } else {
+    //   alert('Failed to create workout');
+    // }
   }
 };
+
+const workoutId = document.querySelector('form').getAttribute('id').split('-')[1]
+
+const currentWorkout = await fetch(`/api/workouts/${workoutId}`,{
+  method: "GET",
+  
+})
+.then(response => response.json())
+const exercise = document.querySelector("#exerciseInput").value=currentWorkout.exercise;
+const sets = document.querySelector("#setsInput").value=currentWorkout.sets;
+const reps = document.querySelector("#repsInput").value=currentWorkout.reps;
+const weight = document.querySelector("#weightInput").value=currentWorkout.weight;
+const comments = document.querySelector("#comments").value=currentWorkout.comments;
 
 const logButton = document.querySelector("#testlog");
 console.log(logButton);
 logButton.addEventListener("submit", logFiller);
+

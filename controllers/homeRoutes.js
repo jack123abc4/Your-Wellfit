@@ -168,45 +168,115 @@ router.get('/searchResults', async (req, res) => {
     res.render('recipe');
   });
 
-  router.get('/workout', async (req, res) => {
+  router.get("/workout", async (req, res) => {
     try {
       const workoutData = await Workout.findAll();
-      console.log(workoutData)
-  
+      console.log(workoutData);
+   
       const workouts = workoutData.map((workout) => workout.get({ plain: true }));
-  
-      res.render('workout', { 
-        workouts, 
-        logged_in: req.session.logged_in 
+   
+      res.render("workout", {
+        workouts,
+        logged_in: req.session.logged_in,
       });
     } catch (err) {
       res.status(500).json(err);
     }
   });
-
-  router.get('/addworkout', async (req, res) => {
+   
+  router.get("/addworkout", async (req, res) => {
     try {
       const workoutData = await Workout.findAll();
-      console.log(workoutData)
-      
+      console.log(workoutData);
+   
       const workouts = workoutData.map((workout) => workout.get({ plain: true }));
-  
-      res.render('addworkout', { 
-        workouts, 
-        logged_in: req.session.logged_in 
+   
+      res.render("addworkout", {
+        workouts,
+        logged_in: req.session.logged_in,
       });
     } catch (err) {
       res.status(500).json(err);
     }
   });
-
-  router.get('/viewworkout/:id', (req, res) => {
+   
+  // router.get("/editworkout/:id", async (req, res) => {
+  //   try {
+  //     const workoutData = await Workout.findByPk(req.params.id, {
+  //       include: [
+  //         {
+  //           model: User,
+  //           // attributes: ["username"],
+  //         },
+  //         {
+  //           model: Workout,
+  //           include: [User],
+  //         },
+  //       ],
+  //     });
+   
+  //     const workout = workoutData.get({
+  //       plain: true,
+  //     });
+   
+  //     res.render("editworkout", {
+  //       ...workout,
+  //       logged_in: req.session.logged_in,
+  //     });
+  //   } catch (err) {
+  //     res.status(500).json(err);
+  //   }
+  // });
+   
+  // router.get("/viewworkout/:id", async (req, res) => {
+  //   try {
+  //     const workoutData = await Workout.findByPk(req.params.id, {
+  //       include: [
+  //         {
+  //           model: User,
+  //           // attributes: ["username"],
+  //         },
+  //         {
+  //           model: Workout,
+  //           include: [User],
+  //         },
+  //       ],
+  //     });
+   
+  //     const workout = workoutData.get({
+  //       plain: true,
+  //     });
+   
+  //     res.render("viewworkout", {
+  //       ...workout,
+  //       logged_in: req.session.logged_in,
+  //     });
+  //   } catch (err) {
+  //     res.status(500).json(err);
+  //   }
+  // });
+   
+  router.get("/editworkout/:id", async (req, res) => {
     if (req.session.logged_in) {
-      res.redirect('/viewworkout');
+      res.redirect("/editworkout");
       return;
     }
-  
-    res.render('viewworkout');
+   
+    let workout = await Workout.findByPk(req.params.id)
+    workout = await workout.get({plain:true})
+    res.render("editworkout",{workout});
   });
+  
+  router.get("/viewworkout/:id", async (req, res) => {
+    // if (req.session.logged_in) {
+    //   res.redirect("/viewworkout");
+    //   return;
+    // }
+   
+    let workout = await Workout.findByPk(req.params.id)
+    workout = await workout.get({plain:true})
+    res.render("viewworkout",{workout});
+  });
+  
 
 module.exports = router;
