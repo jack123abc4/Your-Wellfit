@@ -311,6 +311,9 @@ const saveBtnClick = async (event) => {
     }) 
 }
 
+const resetBtnClick = async (event) => {
+    location.reload();
+}
 const favBtnClick = async (event) => {
     if (clickMode !== 'fav') {
         clickMode = 'fav';
@@ -343,7 +346,7 @@ const replaceModalBtnClick = async(event) => {
         measure: replaceModal.querySelector("#input-measure").value,
         food: replaceModal.querySelector("#input-food").value
     }
-    createIngredient(newIngredientBody);
+    await createIngredient(newIngredientBody);
     // const newIngredientBody = { "quantity": ingredient.food, "
     // "ingredients": [{
     //     "quantity": parseFloat(ingredient.quantity),
@@ -351,7 +354,7 @@ const replaceModalBtnClick = async(event) => {
     //     "foodId": ingredient.food_id
     // }]
 
-    updateNutrients();
+    await updateNutrients();
 }
 
 const addModalBtnClick = async(event) => {
@@ -360,7 +363,7 @@ const addModalBtnClick = async(event) => {
         measure: addModal.querySelector("#input-measure").value,
         food: addModal.querySelector("#input-food").value
     }
-    createIngredient(newIngredientBody);
+    await createIngredient(newIngredientBody);
     // const newIngredientBody = { "quantity": ingredient.food, "
     // "ingredients": [{
     //     "quantity": parseFloat(ingredient.quantity),
@@ -368,7 +371,7 @@ const addModalBtnClick = async(event) => {
     //     "foodId": ingredient.food_id
     // }]
 
-    updateNutrients();
+    await updateNutrients();
 }
 
 const subtractBtn = document.querySelector('#subtract-btn');
@@ -376,11 +379,13 @@ const replaceBtn = document.querySelector('#replace-btn');
 const addBtn = document.querySelector('#add-btn');
 const favBtn = document.querySelector('#fav-btn');
 const saveBtn = document.querySelector("#save-btn");
+const resetBtn = document.querySelector("#reset-btn");
 
 
 subtractBtn.addEventListener('click', subtractBtnClick);
 replaceBtn.addEventListener('click', replaceBtnClick);
-saveBtn.addEventListener('click', saveBtnClick)
+saveBtn.addEventListener('click', saveBtnClick);
+resetBtn.addEventListener('click', resetBtnClick);
 
 const replaceModalBtn = document.querySelector("#replace-modal-btn");
 replaceModalBtn.addEventListener('click', replaceModalBtnClick)
