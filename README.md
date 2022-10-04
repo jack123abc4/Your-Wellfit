@@ -2,7 +2,7 @@
   ## Licensing:
   [![license](https://img.shields.io/badge/license-MIT-blue)](https://shields.io)
 
-![](Your-Wellfit\images\Screenshot 2022-10-03 142538.png)
+![](public\images\screenshot.png)
   ## Table of Contents 
   - [Description](#description)
   - [Usage](#usage)
