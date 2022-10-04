@@ -2,7 +2,8 @@
   ## Licensing:
   [![license](https://img.shields.io/badge/license-MIT-blue)](https://shields.io)
 
-![](public\images\screenshot.png)
+
+![image](/public/images/screenshot.PNG)
   ## Table of Contents 
   - [Description](#description)
   - [Usage](#usage)
