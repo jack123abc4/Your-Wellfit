@@ -3,7 +3,7 @@
   [![license](https://img.shields.io/badge/license-MIT-blue)](https://shields.io)
 
 
-![image](/public/images/screenshot.PNG)
+![image](./public/images/screenshot.PNG)
   ## Table of Contents 
   - [Description](#description)
   - [Usage](#usage)
